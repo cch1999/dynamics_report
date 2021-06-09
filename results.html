@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Protein Dynamics - Results</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+
+					<header id="header">
+						<h1>Results</h1>
+					</header>
+
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="index.html#summary">Home</a></li>
+							<li><a href="intro.html">Introduction</a></li>
+							<li><a href="methods.html">Methods</a></li>
+							<li><a href="results.html" class="active">Results</a></li>
+							<li><a href="dicussion.html">Discussion and Conclusion</a></li>
+							<li><a href="references.html">References</a></li>
+						</ul>
+					</nav>
+
+
+
+				<!-- Main -->
+					<div id="main">
+							
+							<!-- intro-->
+
+
+							<section id="results" class="main">
+								<div class="spotlight">
+									<div class="content">
+										<header class="major">
+											<h2>Results</h2>
+										</header>
+
+
+										<p>After training on a dataset of 2,004 small proteins, many of the potentials resemble those learnt in Greener & Jones (2021) and known chemical knowledge using only 308,671 refined parameters in the MLPs (down from 4 million in Greener & Jones (2021)). In both force-fields, the energy values, along with the temperature and time step, cannot be given standard units due to the course-grained representations of the proteins (Greener & Jones 2021). Our model converged after just one epoch and took 12 hours of training. A substantial improvement over the 45 epochs and 2 months training on the same hardware that was seen in (Greener & Jones 2021). Slower learning rates leading to multiple epochs of training before convergence were considered, but access to the relevant GPUs were restrictive. Unfortunately, a graph of training and test loss over time is not provided for the same reason.</p>
+										<p>Sample potentials from our learnt dynamics model, dθ, and those from Greener & Jones (2021) are provided in Fig 4. Potentials are scaled as appropriate and should not be taken as actually energy values due to the differences in the two methods, only the locations of the minima and profiles of the curves matter. Generally, the locations of the minima in the covalent distance potentials (Fig 4A & E) and the bond angles (Fig 4B) were well learnt. The slopes of the potentials seem to be more broad and less well defined that in Greener & Jones (2021).</p>
+										<p>Fig 4A is representative of all covalent bond potentials learnt in the backbone (minima in correct place but broad slope) and similar for Fig 4B and angles. The minima for roughly half of the 20 possible Ca-sidechain interactions were correctly learnt (see Appendix A) but all had broad slopes and some had multiple minima (not where we would expect alternative rotamer conformations to be).
+										The dihedral angles in Fig 4C D are considerably smoother than in Greener & Jones (2021) but exhibit less well defined slopes. The minima are also correctly positioned in some, but not all, of Ramachandran space.</p>
+										The potentials for all 400 possible sidechain-sidechain interactions are virtually identical to that as seen in Fig 4F. That is to say, there is a repulsive ’term’ that prevents steric clashes, whilst the complex interactions that stabilise secondary and tertiary structure have not. An interactive website to view the thousands of potentials that were learnt by our model is currently under development.
+										<p>Sample trajectories made using the learnt model are available at cch1999.github.io/dynamics in both cartoon and stick representations. The animations show that the models have learnt native backbone flexibility but the tertiary structure eventually begins to unfold. The folding of small proteins was attempted the same as in Greener & Jones (2021) but with little success.</p>
+
+									</div>
+								</div>
+							</section>
+					</div>
+
+				<!-- Footer -->
+				<footer class="major">
+
+
+					<p class="copyright">&copy; Charlie Harris. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+
+				</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
