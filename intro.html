@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Protein Dynamics - Introduction</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+
+					<header id="header">
+						<h1>Introduction</h1>
+					</header>
+
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="index.html#summary">Home</a></li>
+							<li><a href="intro.html" class="active">Introduction</a></li>
+							<li><a href="methods.html">Methods</a></li>
+							<li><a href="results.html">Results</a></li>
+							<li><a href="dicussion.html">Disccusion and Conclusion</a></li>
+							<li><a href="references.html">References</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+							
+							<!-- intro-->
+							<section id="intro" class="main">
+								<div class="spotlight">
+									<div class="content">
+										<header class="major">
+											<h2>Introduction</h2>
+										</header>
+										<p>The early development of X-ray crystallography (Ameh 2019, Blundell et al. 1971) as a means of determining the structure of proteins meant that most work in structural biology in the 20th century tried to explain the functions of proteins by considering them as static structures (Karplus & McCammon 1986). However, recent decades have seen a shift towards a greater appreciation for the role that dynamics plays in determining protein function (Zhao 2013, Doniach & Eastman 1999), largely thanks to new techniques such as protein NMR (Sekhar & Kay 2019, Ishima & Torchia 2000) and XFELs (Spence 2017, Johansson et al. 2017). Indeed, much has been made recently of intrinsically disordered proteins which do not fold into a stable structure at all, yet exhibit biological functions (Wright & Dyson 2015, Oldfield & Dunker 2014). Therefore, having accurate models of protein dynamics will be essential for almost all future work in biology, but especially drug design (Lee et al. 2019, Mortier et al. 2015, Zhao & Caflisch 2015, Peng 2009) and understanding diseases caused by misfolding proteins, such as Alzheimer’s and Parkinson’s (Selkoe 2004).</p>
+
+										<p>The advances of <a href="https://deepmind.com/research/case-studies/alphafold">AlphaFold2</a> (Jumper et al. 2020) have shown that our future understanding of biology and the mechanisms of disease will be increasingly understood at the structural level (AlQuraishi 2021). Therefore, developing new ”neuralised” approaches to understand the dynamics of proteins will be of fundamental importance to solve problems at the frontiers of medicine and drug design. Indeed, the fact that a limitation of AlphaFold2 seems to be its ability to predict NMR solved structures (Jumper et al. 2020) suggests there is still much work to be done.</p>
+
+										<p>Graph neural networks (GNNs) (Battaglia et al. 2018, Monti et al. 2017), themselves a subset of Geometric Deep Learning (Bronstein et al. 2017), have been used to learn complex physics before (Sanchez-Gonzalez et al. 2020). However, in comparison to proteins, these have all been done on relatively homogeneous materials and little is known about the number of parameters and expressivity required to learn the dynamics of whole proteins (and protein complexes) using neural network based approaches.</p>
+
+										<p>There has also been much recent work in developing deep learning architectures that are equivariant to rigid motions in Euclidean space (Satorras, Hoogeboom & Welling 2021, Fuchs et al. 2020) and able to learn higher-order interactions in graph structured data (Bodnar et al. 2021) that have yet to gain much attention in the domain of structural biology, let alone protein dynamics.</p>
+								</div>
+							</section>
+
+							<!--Related work-->
+							<section id="related" class="main">
+								<div class="spotlight">
+									<div class="content">
+										<header class="major">
+											<h2>Related work</h2>
+										</header>
+										<img src="images/dms.png" alt="" width=1000/>
+										<p></p>
+										<p>This work was motivated in large part by Greener & Jones (2021) which proposed a novel Differentiable Molecular Simulation (DMS) for proteins. Here, the authors showed that all the parameters in a conventional, course-grained force-field could be learnt using automatic differentiation (AD). Interestingly, their loss function was simply that the overall protein structure was maintained after being passed through the learnt dynamics simulator with random initial velocities assigned to all the atoms. In other words, if the Root Mean Squared Deviation (RMSD) of all the atoms in the proteins was sufficiently low after N time steps, then the model can be considered to have learnt a form of dynamics that is analogous to that seen in native proteins.</p>
+
+										<p>Figure 1: An overview of a general DMS model. The native structure is first perturbed by assigning random velocities, V , with temperature T , to all the atoms. The protein passes through a simulator, s, N number of times. s consists of a model, d, with parameters θ, that learns the dynamics of the system. The dynamics computed in dθ is passed to the Update function, which updates the coordinates and velocities of the atoms. The Update function can be a standard velocity integrator. After each forward pass, AD is used to refine the parameters θ (red).
+										A generalised overview of the approach outlined in Greener & Jones (2021) is provided in Figure 1. The learned dynamics model, dθ, can be a conventional force-field (with differentiable parameters) or a neural network. Greener & Jones (2021) demonstrated that all the parameters needed in a coursegrained force field could be learnt in this manner by assigning individual energy potentials for every possible atom-atom interaction that is split into 140 bins. The forces were calculated by taking the gradients between adjacent bins whilst the atoms were a certain distance apart. Due to the nature of AD requiring intermediate values of the equations to be stored, the memory requirements of the simulation scales linearly with the number of time steps and is thus the limiting factor in DMS.</p>
+										
+										<p>
+										However, there were significant shortcomings with this approach that need to be addressed. Firstly, an inter-atomic distance matrix needs to be calculated at every step in the simulation. This incurs significant processing and memory costs which were prohibitive to training on proteins greater than 100 amino acids in length or having greater than 2000 time steps. Secondly, the model assumes that every possible atom-atom interaction will share no features and thus defines individual potentials for all of them. This leads to a large number of parameters (4,000,000+) that needs to be learnt and optimised separately leading to poor generalisation. All of these factors led to significant training times (2 months on a Nvidia Tesla V100), which is out of the scope of this project. We argue that this can be reframed as a multi-task learning problem, where we can exploit the commonalities and differences in the different types of interactions seen in proteins.
+										The development of DMS libraries, including TorchMD (Doerr et al. 2021), JAX MD Schoenholz & Cubuk (2019), DeePMD-kit (Wang et al. 2018), SchNetPack (Schutt et al. 2018) and DiffTaichi (Hu et al. 2019), will hopefully spawn much more work into learning protein dynamics using DMS.
+										</p>
+								</div>
+							</section>
+
+
+							<section id="aims" class="main">
+								<div class="spotlight">
+									<div class="content">
+										<header class="major">
+											<h2>Aims</h2>
+										</header>
+										Thus, the aims of this work are 4 fold: <br>
+										<lu class="alt">
+											<li>Create a DMS system that can learn the dynamics of a single protein domain by only requiring a small amount of training data.
+												This is so that the techniques developed here can be transferred to other problems where there will likely be less training data
+												available (e.g protein-protein and protein-drug interactions)</li>
+											<li>Reducing the number of parameters that need to be learnt in the force field by leveraging the high generalising power and expressivity of modern deep learning architectures.</li>
+											<li>Maintaining interpretability in the learnt dynamics by integrating our knowledge of protein dynamics into our machine learning models</li>
+											<li>Reduce the large memory requirements seen in Greener & Jones (2021) by using the KeOps (Charlier et al. 2021) library to calculate distance matrices symbolically.</li>
+										</lu>
+								</div>
+								</div>
+							</section>
+					</div>
+
+				<!-- Footer -->
+				<footer class="major">
+					<ul class="actions special">
+						<li><a href="intro.html" class="button">My background</a></li>
+						<li><a href="methods.html" class="button">Fun stuff</a></li>
+						<li><a href="results.html" class="button">My background</a></li>
+						<li><a href="dicussion.html" class="button">Fun stuff</a></li>
+						<li><a href="references.html" class="button">My background</a></li>
+					</ul>
+
+					<p class="copyright">&copy; Charlie Harris. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+
+				</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
