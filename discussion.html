@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Protein Dynamics - Methods</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+
+					<header id="header">
+						<h1>Discussion and Conclusion</h1>
+					</header>
+
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="index.html#summary">Home</a></li>
+							<li><a href="intro.html">Introduction</a></li>
+							<li><a href="methods.html">Methods</a></li>
+							<li><a href="results.html">Results</a></li>
+							<li><a href="discussion.html" class="active">Discussion and Conclusion</a></li>
+							<li><a href="references.html">References</a></li>
+						</ul>
+					</nav>
+
+
+
+				<!-- Main -->
+					<div id="main">
+							
+							<section id="discussion" class="main">
+									<div class="content">
+										<header class="major">
+											<h2>Discussion</h2>
+										</header>
+
+										<p>By far the biggest limitation of our approach is the high memory costs incurred at each time step due to our use of neural networks to predict the potentials. For every atom interaction, angle and dihedral, a whole MLP worth of activations needs to be stored for AD, in stark contrast to Greener & Jones (2021) which only activates the values in two adjacent energy bins to calculate gradients. Regardless of the considerably faster learning and generalising power that result from the use of deep learning is promising for DMS.</p>
+
+										<p>Further analysis not done here will also be needed to establish whether the learnt dynamics are truly representative of how proteins move in nature. This could be done by comparing the predicted Root Mean Squared Fluctuations of every residue in a protein with those obtained from NMR ensembles.</p>
+
+										<p>The ultimate benchmark for our dynamics model will eventually be whether it can learn to fold small proteins, as was demonstrated with the learnt force-field in Greener & Jones (2021). Our dataset only contains small proteins (≤ 100 residues) too, meaning that the nature of inter-domain interactions will almost certainly not be learnt by any method trained on this dataset.</p>
+
+										<p>One general observation is that the potentials learnt for simple distances and angles have minima in the right places but tend to be quite ”broad” in comparison to the force-field learnt in Greener & Jones (2021). This would mean that our model may allow too much conformational flexibility compared to the native dynamics of proteins, which will cause steric clashing and be a problem for many tasks (e.g. assessing the ’drugability’ of a binding pocket). However, it is notable that the slopes of all our learned potentials are much smoother, due to the fact we are using universal function approximators instead of refining individual bins, which is much more susceptible to noise.</p>
+
+
+										<figure>
+											<span class="image right"><img src="images/future_apporach.png" width=300 alt="" style="border-radius: 5%"/>
+											<figcaption>Figure 5: Left: our current approach draws edges between all atoms based on the KNNs equally. Right: we propose using simple rules that draws edges between the nodes that are known to have covalent interactions (red), leaving the remaining non-covalent edges to be constructed using either a KNN or connectivity radius approach (black).<br></figcaption>      </span>      
+										</figure>
+
+										
+										<p>More importantly, the residue-residue interactions that stabilise the secondary and tertiary structure were essentially unlearnt, even though MLPs should be able to approximate them in theory. This could be due to a number of factors; high learning rate, lack of exposure to tertiary flexibility due to insufficient number of time steps during training or a lack of signal-to-noise when compared to covalent interactions when minimising RMSD. We propose the latter issue should be resolved by creating 2 separate distance sub-networks, one for bonded and non-bonded interactions (Fig 5).</p>
+
+										<p>Our method also does not take into account any explicit solvent, which is problematic as protein folding and dynamics is largely facilitated by the hydrophobic effect (Bellissent-Funel et al. 2016, Cheung et al. 2002). This could be accounted for in the model by concatenating the solvent accessible area of every atom to its embeddings. Alternatively, simply concatenating the number of neighbours that every atom has would be a more efficient alternative.</p>
+
+										<p>As was observed in Greener & Jones (2021), like deep learning, DMS is sensitive to hyperparameters. Our method has the additional complication of the neural network hyperparameters which also need to be refined to balance expresitivity against memory requirements (as well as finding an optimum value of K) and is on going at the time of writing this report. <br> Residual connections were added between the layers in the MLPs but this <br>did not substantially increase performance.</p>
+
+										<header>
+											<h2><b>Future work</b></h2>
+										</header>
+										Recent work has shown that complex physics can be learnt by stacking many layers of message passing GNNs (Sanchez-Gonzalez et al. 2020). Whilst we have intentionally restricted ourselves to one layer of PBMP in this work, we ultimately think moving towards deeper architectures with multiple layers will be needed to gain enough expressive power. However, much thought would need to go into how this could be done whilst maintaining intrepretability, as it will be hard to unpack the individual contributions from each atom in the protein to the overall dynamics. In the following sections, we outline 2 recent areas of work that we think will be of substantial use to protein dynamics.
+
+										<header>
+											<h3><b>Equivariant Message Passing Networks</b></h3>
+										</header>
+
+										<figure>
+											<span class="image left">
+												<video width="400" autoplay loop>
+													<source src="images/equi.mp4" type="video/mp4">
+													<source src="movie.ogg" type="video/ogg">
+												  Your browser does not support the video tag.
+												</video> 
+											<figcaption>Figure 6: Caption<br></figcaption>      </span>      
+										</figure>
+
+
+
+										<p>Recent work in the literature has addressed many problems with using GNNs on graphs where the nodes have spatial coordinates by endowing models with equivariance in the Euclidean group E(n) (Satorras, Hoogeboom & Welling 2021). This is desirable for molecules as we would like these coordinates to be transformed in the same way that they would be transformed in real space. These methods have proved very effective in small molecule generation (Satorras, Hoogeboom, Fuchs, Posner & Welling 2021) and it is speculated that AlphaFold2 relies on an iterative equivariant architecture (Fuchs et al. 2021).</p>
+										<p>However, we argue that E(3) equivariance is not suitable for protein structures as it does not preserve the handedness (chirality) of their structures. Instead, we propose the use of the special Euclidean group SE(3) as these are equivariant to rotations and translations but not reflections. These architectures currently exist (Fuchs et al. 2020) but are more computationally expensive than their E(n) counter-parts (Satorras, Hoogeboom & Welling 2021).</p>
+
+										<header>
+											<h3><b>Message Passing Simplicial networks</b></h3>
+										</header>
+
+										<p>Another recent addition to the literature is Message Passing Simplicial Networks (Bodnar et al. 2021), which allows message passing on Simplicial Complexes (SCs). SCs are topological objects which generalise graphs to higher dimensions. This allows them to capture the higher-order interactions present in complex systems (e.g. molecules and biological networks). The authors also showed that MPSN had greater expressive power compared to baseline GNNs when learning regular graph and can be equipped with orientation equivariant layers. We propose that MPSN could be used to model the multi-level interactions (atom, residue, motif and domain level) we see within proteins. For example, if the potential between 2 atoms is known, and a third atom is introduced, it will distort the electron cloud of the other atoms, thus changing the potential (Goel et al. 2020). To the best of our knowledge, these effects have yet to be taken into account by any machine learning method to date.</p>
+
+										<p>Initial analysis (Appendix B) into the feasibility of this approach indicated there were a prohibitive number of 2-simplices (triangles) in the course-grained protein graph at biologically relevant connectivity thresholds (∼ 8 &#x212B;). Further work could try to alleviate these issues by constructing a policy that only draws 2-simplices between 3 atoms types that are deemed biologically relevant (e.g. only between sidechain centroids within a certain distance or involved in a catalytic triad (Carter & Wells 1988)).</p>
+
+									</div>
+							</section>
+
+
+							<section id="assessment" class="main">
+									<div class="content">
+										<header class="major">
+											<h2>Conclusion</h2>
+										</header>
+										<p>We have validated that here is potential to use deep learning approaches to learn the dynamics of free proteins using only static structures as training data. Whilst we have made memory reductions by the use of the KeOps library to compute distance matrices, we have ultimately not succeeded in our aim of reducing the memory requirements needed for protein DMS. This will need to be a major focus of future work.</p>
+
+										<p>The eventual goal of DMS is not to simply relearn the parameters of a force-field. If our methods eventually reduce the need for large amounts of training data, we can move to study the dynamics of other protein interactions (notably protein-protein interactions, protein-drug interactions and protein aggregation) by using similar loss functions. It would also be worthwhile to investigate whether these loss functions are limited to graph structured data or could instead be applied to protein surface meshes (Gainza et al. 2020) and point clouds (Sverrisson et al. 2020).</p>
+
+										<p>Before we can move onto all-atom representations, course-grained graph representations of proteins are likely to be of substantial use in future research for understanding protein dynamics and numerous other problems in structural biology. The author intends to add this as a granularity feature in a new version of the Graphein (Jamasb et al. 2020) package currently under development.</p>
+
+										<p>Given the healthy scepticism of many scientists and clinicians about the use of machine learning in medicine, integrating explainability into our methods of understanding protein dynamics will be of vital importance if these methods are to be used to design new drugs and treatments in healthcare.</p>
+									</div>
+							</section>
+					</div>
+
+				<!-- Footer -->
+				<footer class="major">
+					<ul class="actions special">
+						<li><a href="intro.html" class="button">My background</a></li>
+						<li><a href="methods.html" class="button">Fun stuff</a></li>
+						<li><a href="results.html" class="button">My background</a></li>
+						<li><a href="dicussion.html" class="button">Fun stuff</a></li>
+						<li><a href="references.html" class="button">My background</a></li>
+					</ul>
+
+					<p class="copyright">&copy; Charlie Harris. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+
+				</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

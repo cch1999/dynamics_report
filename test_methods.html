@@ -1,0 +1,371 @@
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+	<head>
+		<title>Data Analysis Project by Christopher Chung</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+<!-- 		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
+	</head>
+
+	<body class="is-preload" style="background-color: #0D0B0F">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+				<section style="background-image: url(images/cells.png); background-size: cover; background-attachment: fixed; ">
+					<header id="header">
+						<h1>Methods</h1>
+
+					</header>
+				</section>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="home.html"><b>Home</b></a></li>							
+							<li><a href="intro.html"><b>Introduction</b></a></li>
+							<li><a href="methods.html"><b>Methods</b></a></li>
+							<li><a href="results.html"><b>Results and Discussion</b></a></li>
+							<li><a href="conclusion.html"><b>Conclusion</b></a></li>
+							<li><a href="references.html"><b>References</b></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<section id="methods" class="main special">
+<!-- 
+
+							<header class="major special">
+								<h2>Methods</h2>								
+							</header> -->
+							
+							<!-- <ul style="text-align: left; background-color: #f7f7f7"> -->
+							<h3><b>Section Contents</b></h3>
+
+							<ol style="text-align: left;">
+								
+								
+								<li><a href="#overview"><b>Overview</b></a></li>
+								<li><a href="#bmt"><b>Bone Marrow Transplantation</b></a></li>
+								<li><a href="#ivm"><b>Intravital Imaging and Microscopy</b></a></li>
+								<li><a href="#sim"><b>Simulations</b></a></li>
+								<li><a href="#acf"><b>Velocity and Acceleration Autocorrelation Functions</b></a></li>
+								<li><a href="#msd"><b>Mean Squared Displacement and Diffusivity</b></a></li>
+								<li><a href="#ddf"><b>Density-Density Functions</b></a></li>
+								<li id="overview"><a href="#stats"><b>Statistical Analysis and Figures</b></a></li>
+								<br>
+							</ol>
+
+							<br>
+
+							<h3 id="exp">Overview</h3>
+							<br>
+
+							<figure>
+								<img src="images/3exp.png" width = "95%" height = "95%">
+								<figcaption>
+								<b>Figure 3. Schematic overview of experimental methods.</b><br>
+
+								In both experiments mice were irradiated to ablate the marrow and calvarial windows were created for intravital microscopy. 
+
+								<b>a)</b> HSCs (15,000) and MPPs (200,000) were transplanted for single cell MPP tracking.
+								<b>b)</b>  Whole bone marrow (2 million cells) was transplanted before marrow tile scans.
+								</figcaption>
+<br><br>
+
+							<figure>
+
+								<img src="images/3an.png" width = "95%" height = "95%">
+								<figcaption>
+<b>Figure 4. Schematic overview of analytical methods.</b><br>
+<b>a)</b>  MPP coordinates were used to calculate velocity, acceleration and their <div class="tooltip">
+	autocorrelations
+	<span class="tooltiptext">
+		The correlation between values of the same variable as a function of time interval.
+	</span>
+</div>. These parameters were used to simulate cells following a <div class="tooltip">
+	Gaussian random walk
+	<span class="tooltiptext">
+		A random walk (i.e. a stochastic process) in which step size is normally distributed.
+	</span>
+</div>. MSD was calculated for both datasets to estimate diffusion exponents and coefficients by linear regression.
+<b>b)</b> Simulated cells and tile scans were used to calculate density-density functions to investigate the density distributions and length scales of growing cell colonies.
+								</figcaption>
+							</figure>
+<br><br>
+Experimental work was conducted by Professor Lo Celso’s group and data were provided by Dr Lee’s group.
+
+
+							<p id="bmt"></p>
+							<br>
+							<h3>Bone Marrow Transplantation</h3>
+
+							<p>
+Recipient mice (background strain C57BL/6) were lethally irradiated with two doses of 5.5 Gy three hours apart the night prior to allogeneic transplant by tail vein injection, with Nestin GFP<sup>+</sup> reporter fluorescence in recipients.
+							</p>
+
+							<p>
+For MPP tracking <a href="#exp">(<b>Figure 3a</b>)</a> 200,000 MPPs (lineage negative/C-kit<sup>+</sup>/Sca1<sup>+</sup>CD48<sup>+</sup>/CD150<sup>–</sup>) and 15,000 HSCs (lineage negative/C-kit<sup>+</sup>/Sca1<sup>+</sup>/CD48<sup>–</sup>/CD150<sup>–</sup>/CD34<sup>–</sup>) were purified by fluorescence-activated cell sorting and pooled from six Rosa26-mTmG<sup>+</sup> membranous reporter fluorescence donors.
+							</p>
+
+							<p>
+For tile scans <a href="#exp">(<b>Figure 3b</b>)</a> whole marrow (2 million cells) was transplanted from two actin GFP<sup>+</sup> cytoskeletal reporter fluorescence donors per mouse.								
+							</p>
+
+							<p id="ivm"></p>
+							<br><br>
+							<h3>Intravital Microscopy and Imaging Processing</h3>
+
+							<p style="display: inline;">
+Intravital microscopy was performed through microsurgically created windows to the calvarium, which forms the superior aspect of the skull <a href="#exp">(<b>Figure 3</b>)</a>, as described in
+
+<div class="tooltip">
+	[8]
+	<span class="tooltiptext">
+		Lo Celso C, Fleming HE, Wu JW, Zhao CX, Miake-Lye S, Fujisaki J, <i>et al</i>. <br><i>
+		Live-animal tracking of individual haematopoietic stem/progenitor cells in their niche</i>.<br> 
+		Nature 2009;457:92–6.<br>
+		<a href="https://doi.org/10.1038/nature07434"><b>
+		doi:10.1038/nature07434</b></a></span></div>. 								
+							</p>
+
+							<p style="display: inline;">
+173 images of MPPs were recorded at three-minute intervals (total 8.6 hours) on day 2 post-transplant with laser scanning confocal microscopy as described in 
+
+<div class="tooltip">
+	[24]
+	<span class="tooltiptext">
+		Scott MK, Akinduro O, Lo Celso C.<br><i>
+		In vivo 4-dimensional tracking of hematopoietic stem and progenitor cells in adult mouse calvarial bone marrow</i>.<br>
+		J Vis Exp 2014:e51683.<br> 
+		<a href="https://doi.org/10.3791/51683"><b>
+		doi:10.3791/51683</b></a></span></div>.
+
+
+ 1 pixel equals 1.1070 μm<sup>2</sup>. Position data were exported from IMARIS (Bitplane, Switzerland). The longest tracks that remained within the field of view (n = 10) were provided for analysis.
+							</p>
+
+<p></p>
+
+							<p style="display: inline;">
+Tile scans at days 4, 7, 12, 18 and 23 post-transplant, and of the control at week 12 post-transplant (full regeneration), were recorded from different mice with two-photon excitation microscopy as described in
+
+<div class="tooltip">
+	[25]
+	<span class="tooltiptext">
+		Hawkins ED, Duarte D, Akinduro O, Khorshed RA, Passaro D, Nowicka M, <i>et al</i>.<br><i>
+		T-cell acute leukaemia exhibits dynamic interactions with bone marrow microenvironments</i>.<br>
+		Nature 2016;538:518–22.<br>
+		<a href="https://doi.org/10.1038/nature19801"><b>
+		doi:10.1038/nature19801</b></a></span></div>.
+
+  Tile scans are stitched together from multiple fields of view and are maximum intensity projections, two-dimensional images collapsed from three dimensions by taking the highest pixel intensity along the <i>z</i>-axis, at resolutions from 3658-5070 x 1842-2323 pixels. 1 μm equals 1.2044 pixels. Images were encoded in greyscale at 8 bits per pixel to generate intensity values ranging from 0 (black) to 255 (white) with the Pillow image processing library (version 7.0.0).
+							</p>
+
+
+							<p id="sim"></p>
+							<br><br>
+							<h3>Simulations</h3>
+
+							<p>
+Simulated data consisted of 20,000 two-dimensional cell coordinates at 11 time points 1,000 arbitrary time units apart. From an initial random configuration the cells move in the direction of their polarity at each time step, subject to a stochastic noise term and volume exclusion; only one cell can occupy each site. Coordinates were converted into binary occupancy of a 200 x 200 hexagonal lattice, a discretised space where each position has six possible neighbours corresponding to hexagonal vertices.
+								
+							</p>
+Gaussian random walks (n = 10) were simulated in Python (version 3.7.7) with the normally distributed step size parameter based on calculated MPP step sizes.
+
+
+
+							<p id="acf"></p>
+							<br><br>
+							<h3>Velocity and Acceleration Autocorrelation Functions</h3>
+
+							<p style="display: inline;">
+Average velocity was calculated as the Euclidean distance 
+
+<div class="tooltip">
+	[26]
+	<span class="tooltiptext">
+		Ye QZ.<br><i>
+		The signed Euclidean distance transform and its applications.</i><br>
+		9th International Conference on Pattern Recognition, IEEE Comput. Soc. Press; 1988, p. 495–9.<br>
+		<a href="https://doi.org/10.1109/ICPR.1988.28276"><b>
+		doi:10.1109/ICPR.1988.28276</b></a></span></div>
+
+ between coordinates at each time point divided by Δ<i>t</i>:
+
+							</p>
+<p></p>
+<img src="images/vel.png" class="center" style="width:30%">
+
+<p style="text-align: center;">
+	<i>v</i> : velocity, <i>t</i> : time.
+</p>
+
+							<p>
+Acceleration was calculated as Δ<i>v</i> / Δ<i>t</i>. 
+							</p>
+
+							<p>
+The normalised velocity autocorrelation function was calculated as:
+							</p>
+
+<img src="images/vacf.png" class="center" style="width:25%;">
+
+							<p style="text-align: center;">
+〈...〉: average over all cells and starting times, <i>v</i> : velocity, <sup>→</sup>: vector, <i>t</i> : time, <b>·</b> : dot product
+							</p>
+
+							<p>
+The normalised acceleration autocorrelation function was calculated as:
+
+							</p>
+
+<img src="images/aacf.png" class="center" style="width:25%">
+
+							<p style="text-align: center;">
+〈...〉: average over all cells and starting times, <i>a</i> : acceleration, <i>t</i> : time
+								
+							</p>
+
+																					
+							<p id="msd"></p>
+							<br><br>
+							<h3>Mean Squared Displacement and Diffusivity</h3>
+
+							<p>
+MSD was calculated as:
+								
+							</p>
+
+<img src="images/msd.png" class="center" style="width:100%">
+
+							<p style="text-align: center;">
+<i>N</i> : number of cells, <i>t</i><sub>0</sub> : start time, <i>τ</i> : time interval
+								
+							</p>
+
+							<p>
+In anomalous diffusion MSD follows a power law:
+								
+							</p>
+
+<img src="images/ad.png" class="center" style="width:15%">
+
+							<p style="text-align: center;">
+<i>D</i> : diffusion coefficient, <i>τ</i> : time interval, <i>α</i> : anomaly exponent			
+								
+							</p>
+
+							<p>
+<i>α</i> was estimated by the gradient of ordinary least squares regression lines fit to log<sub>10</sub>(MSD) against log<sub>10</sub>(time) and <i>D</i> was estimated by the antilog of the <i>y</i>-intercept. 
+
+							</p>
+
+
+							<p id="ddf"></p>
+							<br><br>
+							<h3>Density-Density Functions</h3>
+
+							<p>
+For simulated data six sites were sampled at increasing radii up a distance of 100 positions from each reference point, in the directions corresponding to extensions of the lines from the reference position to its neighbours in the hexagonal lattice, for distance consistency in the discrete space. The density-density function (<i>DDF</i> ) was calculated as:
+								
+							</p>
+
+<img src="images/ddf.png" class="center" style="width:80%">
+
+							<p style="text-align: center;">
+<i>Cov</i> : covariance, <i>Var</i> : variance, <i>ρ</i> : density, <i>N</i> : total lattice sites, <i>r</i> : radius
+								
+							</p>
+
+							<p>
+For tile scans cell density was too high in areas at all time points to reliably distinguish individual cells and so pixel intensity was used as a proxy measure. At radii up to 100 pixels (83 μm) from each reference point, intensity at sites in four directions was sampled: <i>x</i> ± <i>r</i> and <i>y</i> ± <i>r</i>. Three representative boxes of 300 x 300 pixels (249 μm<sup>2</sup>) were selected from both the anatomical left and right sides. The intensity-intensity function (<i>IIF</i> ) was calculated as:
+							
+							</p>
+
+<img src="images/iif.png" class="center" style="width:80%">
+
+							<p style="text-align: center;">
+<i>Cov</i> : covariance, <i>Var</i> : variance, <i>N</i> : total pixels, <i>i</i> : intensity, <i>r</i> : radius
+								
+							</p>
+
+
+							<p id="stats"></p>
+							<br><br>
+							<h3>Statistical Analysis</h3>
+
+							<p style="display: inline;">
+Data are presented as mean ± standard error of the mean (s.e.m.) unless indicated otherwise. For logarithmically transformed variables s.e.m. calculated as in
+
+<div class="tooltip">
+	[27]
+	<span class="tooltiptext">
+		Quan H, Zhang J. <br><i>
+		Estimate of standard deviation for a log-transformed variable using arithmetic means and standard deviations</i>.<br> 
+		Stat Med 2003;22:2723–36.<br>
+		<a href="https://doi.org/10.1002/sim.1525"><b>
+		doi:10.1002/sim.1525</b></a></span></div>.
+
+
+  Analyses were performed using Python (3.7.7) using the NumPy (1.18.0), Pandas (1.0.3) and SciPy (1.4.1) scientific computing libraries from the Anaconda distribution (4.8.3). Graphs were generated with Plotly (4.7.0),  other figures  with <a href="https://biorender.com/">BioRender</a> and GIFs with <a href="https://gifrun.com/">GifRun</a>. Version numbers in parentheses. Custom Python scripts were written for all measures calculated.
+								
+							</p>
+
+
+
+							<footer class="major">
+								<ul class="actions special">
+									<li><a href="intro.html" class="button">Introduction</a></li>
+									<li><a href="results.html" class="button">Results and Discussion</a></li>
+								</ul>
+							</footer>
+
+						</section>
+
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">
+							<a href="mailto:cmc210@ic.ac.uk"><b>Christopher Chung</b></a> 
+							| 
+							<a href="https://www.imperial.ac.uk/Imperial College London"><b>Imperial College London</b></a> | 
+							<b>&copy; Untitled. Design: Adapted from </b><a href="https://html5up.net"><b>HTML5 UP</b></a>
+							| 
+							<b>Banner image from <a href="https://www.nature.com/articles/ncb3444/figures/3">[41]</a></b>
+						</p>
+					</footer>
+
+ 					<button onclick="topFunction()" id="myBtn" title="Go to top">
+ 						<i class="fa fa-angle-up" aria-hidden="true" style='font-size:2em'></i>
+					</button> 
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

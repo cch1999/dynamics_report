@@ -22,7 +22,7 @@
 				<!-- Header -->
 
 					<header id="header">
-						<h1>Introduction</h1>
+						<h1>Methods</h1>
 					</header>
 
 
@@ -33,7 +33,7 @@
 							<li><a href="intro.html">Introduction</a></li>
 							<li><a href="methods.html" class="active">Methods</a></li>
 							<li><a href="results.html">Results</a></li>
-							<li><a href="dicussion.html">Discussion and Conclusion</a></li>
+							<li><a href="discussion.html">Discussion and Conclusion</a></li>
 							<li><a href="references.html">References</a></li>
 						</ul>
 					</nav>
@@ -42,6 +42,25 @@
 
 				<!-- Main -->
 					<div id="main">
+
+							<!-- intro-->
+							<section id="intro" class="main">
+								<div class="content">
+									<header class="major">
+										<h2>Background</h2>
+									</header>
+									<p>
+
+									The following link to pages detailing background knowledge for those less farmilar with the computational and machine learning methods used here.</p>
+
+
+									<ul class="actions special">
+										<li><a href="background/gnns.html" class="button">Graph Neural Networks</a></li>
+										<li><a href="background/keops.html" class="button">Symbolic Matrices</a></li>
+
+									</ul>
+								</div>
+							</section>
 							
 							<!-- intro-->
 							<section id="intro" class="main">
@@ -70,10 +89,22 @@
 										<figure>
 											<img src="images/dynamics.png" width=700/>
 											<figcaption>Figure 3: An overview of our dynamics model d<sub>θ</sub> .</figcaption>           
-										</figure>
+										</figure><br>
+
+
 										<p>We construct a DMS simulator for proteins (as seen in Figure 1) where dθ is outlined in Figure 3. For every N number of steps, the atoms enter dθ as a set of points in space. Edges are drawn between the atoms using a fast KNN algorithm implemented in KeOps such that distance matrices only need to be computed symbolically. Our physics-based message-passing procedure (see Section 2.3) employs 3 separate sub-networks to predict the potentials of atom-atom interactions based on distances, angles and dihedrals respectively. Forces are calculated by taking the gradient of the potentials at the given distance/angle. Finally, all forces acting on every atom are summed and final atom accelerations are computed.</p>
 
-										<p>We use the same Verlet integrator as seen in Greener & Jones (2021) as the Update function to compute the new velocities and coordinates. As the atoms are initialised with random starting velocities in every batch of training, the networks are forced to learn a dynamics model that can maintain the structure overtime.</p>
+										<figure>
+											<img src="images/keops.png" width=700/>
+											<figcaption>Figure 3: An overview of our dynamics model d<sub>θ</sub> .</figcaption>           
+										</figure><br>
+
+										<p>We use the same Verlet integrator as seen in Greener & Jones (2021) as the Update function to compute the new velocities and coordinates. As the atoms are initialised with random starting velocities in every batch of training, the networks are forced to learn a dynamics model that can maintain the structure overtime. The simulator and the message-passing layers are implemented in <a href="https://pytorch.org/">Pytorch</a> (add reference), making the whole function end-to-end differentiable.</p>
+
+										<figure>
+											<img src="images/training.gif" width=800/>
+											<figcaption>Figure 5: An overview of how dynamics is learnt during training. (A) initially, all the potentials are flat, the atoms will continue to move in the directions of their random velocites and the protein "explodes" d<sub>θ</sub> .</figcaption>           
+										</figure><br>
 										
 								</div>
 							</section>
@@ -124,7 +155,7 @@
 										<header class="major">
 											<h2>Training</h2>
 										</header>
-										<p>All training was done on a NVIDIA Tesla V100 and took 32GB of GPU memory for one forward pass using a batch size of 1. A starting temperature of 0.05, time step of 0.05, k of 20 and learning rate of 0.0005 were used over 1 epoch where each sample was simulated for 180 time steps during training. No thermostat was used during training.</p>
+										<p>All training was done on a <a href="https://www.nvidia.com/en-gb/data-center/tesla-v100/">NVIDIA Tesla V100</a> and took 32GB of GPU memory for one forward pass using a batch size of 1. A starting temperature of 0.05, time step of 0.05, k of 20 and learning rate of 0.0005 were used over 1 epoch where each sample was simulated for 180 time steps during training. No thermostat was used during training.</p>
 									</div>
 								</div>
 							</section>

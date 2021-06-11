@@ -21,11 +21,13 @@
 
 
 					<header id="header">
-						<p><span class="image right"></span><img src="images/animation.gif" alt="" style="border-radius: 5%"/></span>
+						<p><span class="image right"></span>
+							<img src="images/animation.gif" alt="" style="border-radius: 5%"/>
+						</span>
 						<h1>Learning interpretable protein dynamics using Geometric Deep Learning</h1>
 						<h2>Charles Harris</h2>
 						<h3>MSc Bioinformatics and Theortical System Biology Data Analysis Project</h3>
-						<h3>Supervisors: <a href="https://www.imperial.ac.uk/people/m.bronstein">Prof Michael Bronstein</a> | <a href="https://people.epfl.ch/bruno.correia/?lang=en">Dr Bruno Corria</a> (EPFL)</h3>
+						<h3>Supervisors: <a href="https://www.imperial.ac.uk/people/m.bronstein">Prof Michael Bronstein</a> | <a href="https://people.epfl.ch/bruno.correia/?lang=en">Dr Bruno Correia</a> (EPFL)</h3>
 						<p>Understanding the dynamics of proteins is of fundamental importance to solving problems in drug design and uncovering the mechanisms of disease. The recent success of machine learning in the domain of protein structure prediction suggests that there is much to be gained by applying the same techniques to learning protein dynamics. However, most current approaches have either only been applied to small molecules or have not leveraged the generalising ability of modern deep learning. Here we introduce a variation on the popular message-passing architecture called physics-based message-passing, which aims to solve many problems of previous work using deep learning whilst maintaining interpretability. This is done by integrating out knowledge of the physics of protein dynamics into the message passing architecture. We conclude with a short discussion on the limitations of our approach and possible future directions for the field.</p>
 					</header>
 
@@ -37,7 +39,7 @@
 							<li><a href="intro.html">Introduction</a></li>
 							<li><a href="methods.html">Methods</a></li>
 							<li><a href="results.html">Results</a></li>
-							<li><a href="dicussion.html">Discussion and Conclusion</a></li>
+							<li><a href="discussion.html">Discussion and Conclusion</a></li>
 							<li><a href="references.html">References</a></li>
 						</ul>
 					</nav>
@@ -48,7 +50,7 @@
 						<!-- About me -->
 							<section id="intro" class="main">
 								<div class="spotlight">
-									<div class="content">
+									<div class="content" style="font-weight: lighter;">
 										<header class="major">
 											<h2>Lay Summary</h2>
 										</header>
@@ -58,13 +60,40 @@
 												<h3>Abbreviations and Glossary</h3>
 										</header>
 
-										<div style="width:25%;display: inline-block;">
+										<div style="width:30%;display: inline-block;">
+
+										<a href="https://en.wikipedia.org/wiki/Automatic_differentiation">
+											<b>Automatic Differentiation</b></a><br><br>
+
+										<a href="https://en.wikipedia.org/wiki/Dihedral_angle?oldformat=true#Proteins">
+											<b>Dihedral Angle</b></a><br><br>
 
 										<a href="">
-											<b>DMS</b></a><br>
+											<b>DMS</b></a><br><br>
 			
 										<a href="">
-											<b>GNNs</b></a><br>
+											<b>GNNs</b></a><br><br>
+
+										<a href="https://en.wikipedia.org/wiki/Intrinsically_disordered_proteins">
+											<b>Intrinsically Disordered Proteins</b></a><br><br>
+
+										<a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">
+											<b>KNN</b></a><br><br>
+
+										<a href="https://en.wikipedia.org/wiki/Loss_function">
+											<b>Loss Function</b></a><br><br>
+
+										<a href="https://en.wikipedia.org/wiki/Multilayer_perceptron">
+											<b>MLP</b></a><br>
+
+										<a href="https://en.wikipedia.org/wiki/Molecular_dynamics">
+											<b>Molecular Dynamics</b></a><br>
+
+										<a href="https://en.wikipedia.org/wiki/Protein_dynamics">
+											<b>Protein dynamics</b></a><br>
+
+										<a href="https://en.wikipedia.org/wiki/Root-mean-square_deviation_of_atomic_positions">
+											<b>RMSD</b></a><br><br>
 
 										<a href="https://en.wikipedia.org/wiki/Simplicial_complex">
 											<b>Simplicial Complexes</b></a><br>
@@ -73,12 +102,30 @@
 											<b>Physics-Based Message-Passing</b></a><br>
 
 										</div>
-			
-										<div style="width:74%;display: inline-block;">
+
+										<div style="width:60%;display: inline-block; font-weight: lighter;">
+
+											A computational method to quickly determine the derivative of a function (also known as <a href="https://en.wikipedia.org/wiki/Backpropagation">back propergation</a> when used in <a href="https://en.wikipedia.org/wiki/Deep_learning">Deep Learning</a>)<br>
+
+											The angle formed between 2 intersecting planes, a common why to describe the geometry of 4 atoms in space<br>
 
 											Differentiable Molecular Simulators: A class of molecular simulator which is fully differentiable, meaning the parameters can be very quickly refined<br>
 			
 											Graph Neural Networks: A type of neural network which takes graph structured data as the input<br>
+
+											Highly flexible proteins that do not form stable structures yet back biological functions<br>
+
+											K-nearest neighbours algorithum: a non-parametric classification method to determine the k cloestest neighbours of an object<br> 
+
+											The function by which we can measure the "cost" of some event. In machine learning, this funciton is minimised during training.<br>
+
+											Multi Layer Perceptron: the most basic kind of artifical neural network<br>
+
+											A simulation method for the study of movements of atoms and molecules<br>
+
+											The study of <br>
+
+											Root Mean Squared Deviation: a measure of the average distance between atoms of two superimposed proteins<br>
 			
 											Toplogical objects which generalise graphs to higher dimensions<br>
 
@@ -115,9 +162,10 @@
 												<h3><b>Acknowledgements</b></h3>
 											</header>
 			
+											<div style="font-weight: ligher;">
 												<p>My thanks go to Michael Bronstein and Bruno Correia for their supervision and generous access to computational resources.</p>
 												<p>I would also like to thank Freyr Sverrisson for his guidance throughout the project and Fabrizio Frasca for the discussions on simplicial complexes.</p>
-			
+											</div>
 			
 											<footer class="major">
 			
