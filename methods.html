@@ -46,9 +46,20 @@
 							<!-- intro-->
 							<section id="intro" class="main">
 								<div class="content">
-									<header class="major">
-										<h2>Background</h2>
-									</header>
+
+									<h3><b>Section Contents</b></h3>
+
+									<ol style="text-align: left">
+										<li><a href="#background"><b>Background</b></a></li>
+										<li><a href="#model"><b>Learned dynamics model</b></a></li>
+										<li><a href="#pbmp"><b>Physics-based message-passing</b></a></li>
+										<li><a href="#dataset"><b>Dataset</b></a></li>
+										<li><a href="#training"><b>Training</b></a></li>
+										<li><a href="#assesment"><b>Model assesment</b></a></li>
+									</ol>
+
+									<h3 id="background"><b>Background</b></h3>
+
 									<p>
 
 									The following link to pages detailing background knowledge for those less farmilar with the computational and machine learning methods used here.</p>
@@ -59,33 +70,11 @@
 										<li><a href="background/keops.html" class="button">Symbolic Matrices</a></li>
 
 									</ul>
-								</div>
-							</section>
-							
-							<!-- intro-->
-							<section id="intro" class="main">
-									<div class="content">
-										<header class="major">
-											<h2>Dataset</h2>
-										</header>
-										<p>
-										<figure>
-											<span class="image right"><img src="images/cg.jpg" width=500 alt=""/>
-											<figcaption>Figure 2: Two representations of a protein structure graph. Left: an all-atom representation of a protein α-helix. Right: a course-grained representation of a protein as used here.<br></figcaption>      </span>      
-										</figure>
-										<br>
 
-										In this work we use the same dataset from Greener & Jones (2021) for training and evaluation. This dataset contains 2204 small protein structures (2004/200 train/test split) with a course-grained presentation (each residue has 4 atoms, Ca, C, N and side chain centroid) as seen in Figure 2. We use this datasets for fair comparisons, the quality of the structures (better than 2.5  ̊A resolutions and no missing internal residues) and small chain lengths (ideal for memory restrictions)</p>
-								</div>
-							</section>
+										
 
-							<!--Related work-->
-							<section id="related" class="main">
-								<div class="spotlight">
-									<div class="content">
-										<header class="major">
-											<h2>Learned dynamics model</h2>
-										</header>
+										<h3 id="model"><b>Learnt dynamics model</b></h3>
+
 										<figure>
 											<img src="images/dynamics.png" width=700/>
 											<figcaption>Figure 3: An overview of our dynamics model d<sub>θ</sub> .</figcaption>           
@@ -105,17 +94,12 @@
 											<img src="images/training.gif" width=800/>
 											<figcaption>Figure 5: An overview of how dynamics is learnt during training. (A) initially, all the potentials are flat, the atoms will continue to move in the directions of their random velocites and the protein "explodes" d<sub>θ</sub> .</figcaption>           
 										</figure><br>
-										
-								</div>
-							</section>
 
 
-							<section id="pbmp" class="main">
-								<div class="spotlight">
-									<div class="content">
-										<header class="major">
-											<h2>Physics-based message-passing</h2>
-										</header>
+
+
+										<h3 id="pbmp"><b>Physics-based message-passing</b></h3>
+
 										<p>We propose the use of a new GNN architecture, called physics-based message-passing (PBMP), which leverages our knowledge of the mechanics underlying molecular dynamics (Monasse & Boussinot 2014) and the inductive biases of GNNs (Battaglia et al. 2018, Monti et al. 2017). These physics-based equations could certainly be learnt by a neural network, but by integrating them into our message-passing procedure, we force the network to learn around these equations which makes our model interpretable. We define a basic PBMP as the following:</p>
 
 										\begin{equation}
@@ -145,27 +129,25 @@
 										<p>Full derivation of the equations used in ψp are provided in Monasse & Boussinot (2014). However, in brief, the messages can be thought of as the scalar value describing the magnitude of the force between multiple atoms (be they bonded or in an angle/dihedral) and ψp recovers this into a 3D force vector to be
 										applied to each atom. For example, in the case of distance forces, this is simply achieved by multiplying
 										mij by the normalised vector difference between atoms i and j (norm(ij)).</p>
-									</div>
-								</div>
-							</section>
 
-							<section id="training" class="main">
-								<div class="spotlight">
-									<div class="content">
-										<header class="major">
-											<h2>Training</h2>
-										</header>
+										<h3 id="dataset"><b>Dataset</b></h3>
+
+										<p>
+										<figure>
+											<span class="image right"><img src="images/cg.jpg" width=500 alt=""/>
+											<figcaption>Figure 2: Two representations of a protein structure graph. Left: an all-atom representation of a protein α-helix. Right: a course-grained representation of a protein as used here.<br></figcaption>      </span>      
+										</figure>
+										<br>
+
+										In this work we use the same dataset from Greener & Jones (2021) for training and evaluation. This dataset contains 2204 small protein structures (2004/200 train/test split) with a course-grained presentation (each residue has 4 atoms, Ca, C, N and side chain centroid) as seen in Figure 2. We use this datasets for fair comparisons, the quality of the structures (better than 2.5  ̊A resolutions and no missing internal residues) and small chain lengths (ideal for memory restrictions)</p>
+
+										<h3 id="training"><b>Training</b></h3>
+
 										<p>All training was done on a <a href="https://www.nvidia.com/en-gb/data-center/tesla-v100/">NVIDIA Tesla V100</a> and took 32GB of GPU memory for one forward pass using a batch size of 1. A starting temperature of 0.05, time step of 0.05, k of 20 and learning rate of 0.0005 were used over 1 epoch where each sample was simulated for 180 time steps during training. No thermostat was used during training.</p>
-									</div>
-								</div>
-							</section>
 
-							<section id="assessment" class="main">
-								<div class="spotlight">
-									<div class="content">
-										<header class="major">
-											<h2>Model assessment</h2>
-										</header>
+
+										<h3 id="assesment"><b>Model assessment</b></h3>
+
 										<p>Once we have trained the models, we can interpret the learnt dynamics by presenting the sub-networks with synthetic examples (e.g. 2 atoms at varying distances apart). These can then be used to graph potentials and compared to other force-fields (e.g. that in Greener & Jones (2021) trained on the same data) and known statistics from chemical knowledge and the PDB (e.g. Mean Potential Force (Zhou & Zhou 2002)), the last of which has not been done here (see Discussion). This is only possible because we have integrated our knowledge of molecular dynamics into our neural network architecture.</p>
 
 										<p>After training, sample trajectories were generated over 5,000 steps (structure saved every 10 steps) with a time step of 0.02 and temperature of 0.01. Folding of small proteins over 10,000s of steps was also attempted. Animations were made in PyMol (DeLano et al. 2002) and plots were produced using Matplotlib (Hunter 2007).</p>

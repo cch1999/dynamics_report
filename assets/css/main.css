@@ -40,6 +40,7 @@ figure {
 
 body {
 	line-height: 1;
+	color: black
 }
 
 ol, ul {
@@ -57,12 +58,12 @@ ol, ul {
 /* Tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 300;
+  width: 400;
   background-color: rgb(83, 142, 197);
   color: #fff;
   text-align: center;
   padding: 5px 0;
-  border-radius: 6px;
+  border-radius: 10px;
  
   /* Position the tooltip text - see examples below! */
   position: absolute;
