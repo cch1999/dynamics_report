@@ -69,7 +69,7 @@
 											<figcaption>Figure x: Samples of the learnt force-field in comparison to true statistics and the force-field learnt in Greener & Jones (2021). <b>(A) </b>Distance potential of the N to Ca covalent bond in a single alanine residue. <b>(B)</b> Angle potential of the N-Ca-C bond angle in a single alanine residue. <b>(C+D)</b> ψ and ψ torsion angle potentials in valine. <b>(E)</b> Proline Ca to sidechain centroid distance potentials. <b>(F)</b> Isoleucine sidechain to leucine sidechain distance potential.<br></figcaption>
 										</figure>
 										<br>
-										<p>After training on a dataset of 2,004 small proteins, many of the potentials resemble those learnt in Greener & Jones (2021) and known chemical knowledge using only 308,671 refined parameters in the MLPs (down from 4 million in Greener & Jones (2021)). In both force-fields, the energy values, along with the temperature and time step, cannot be given standard units due to the course-grained representations of the proteins (Greener & Jones 2021). Our model converged after just one epoch and took 12 hours of training. A substantial improvement over the 45 epochs and 2 months training on the same hardware that was seen in (Greener & Jones 2021). Slower learning rates leading to multiple epochs of training before convergence were considered, but access to the relevant GPUs were restrictive. Unfortunately, a graph of training and test loss over time is not provided for the same reason.</p>
+										<p>After training on a dataset of 2,004 small proteins, many of the potentials resemble those learnt in Greener & Jones (2021) and known chemical knowledge using only 308,671 refined parameters in the MLPs (down from 4 million in Greener & Jones (2021)). In both force-fields, the energy values, along with the temperature and time step, cannot be given standard units due to the course-grained representations of the proteins (Greener & Jones 2021). Our model converged after just one epoch and took 12 hours of training. A substantial improvement over the 45 epochs and 2 months training on the same hardware that was seen in (Greener & Jones 2021). Slower learning rates leading to multiple epochs of training before convergence were considered, but access to the relevant GPUs were restrictive.</p>
 										<p>Sample potentials from our learnt dynamics model, dθ, and those from Greener & Jones (2021) are provided in Fig 4. Potentials are scaled as appropriate and should not be taken as actually energy values due to the differences in the two methods, only the locations of the minima and profiles of the curves matter. Generally, the locations of the minima in the covalent distance potentials (Fig 4A & E) and the bond angles (Fig 4B) were well learnt. The slopes of the potentials seem to be more broad and less well defined that in Greener & Jones (2021).</p>
 										<p>Fig 4A is representative of all covalent bond potentials learnt in the backbone (minima in correct place but broad slope) and similar for Fig 4B and angles. The minima for roughly half of the 20 possible Ca-sidechain interactions were correctly learnt (see Appendix A) but all had broad slopes and some had multiple minima (not where we would expect alternative rotamer conformations to be).
 										The dihedral angles in Fig 4C D are considerably smoother than in Greener & Jones (2021) but exhibit less well defined slopes. The minima are also correctly positioned in some, but not all, of Ramachandran space.</p>
@@ -102,6 +102,17 @@
 											<iframe src="file.html" width=1050 height=500></iframe>
 											<figcaption>Figure: <br></figcaption>
 										</figure>
+
+										<p>As a final means of evaluating our leanrt dynamics, we compare the flexibility seen in our simulations with the learnt force-field from Greener and Jones (2021) and NMR. To do this, we compute the Root Mean Sqaured Fluctuations of every residue in two small proteins, Trip</p>
+
+										<footer class="major">
+			
+											<ul class="actions special">
+												<li><a href="methods.html" class="button">Methods</a></li>
+												<li><a href="discussion.html" class="button">Disscussion</a></li>
+											</ul>
+		
+										</footer>
 
 
 									</div>
