@@ -58,7 +58,7 @@ ol, ul {
 /* Tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 400;
+  width: 400px;
   background-color: rgb(83, 142, 197);
   color: #fff;
   text-align: center;
@@ -3375,7 +3375,7 @@ input, select, textarea {
 
 	#main {
 		background-color: #ffffff;
-		color: #636363;
+		color: black;
 		border-radius: 0.25em;
 	}
 
@@ -3392,7 +3392,7 @@ input, select, textarea {
 		}
 
 		#main h1, #main h2, #main h3, #main h4, #main h5, #main h6 {
-			color: #636363;
+			color: black;
 		}
 
 		#main blockquote {

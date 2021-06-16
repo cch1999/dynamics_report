@@ -49,6 +49,18 @@
 											<h2>Discussion</h2>
 										</header>
 
+										<h3><b>Section Contents</b></h3>
+
+										<ol style="text-align: left">
+											<li><a href="#potentials"><b>Discussion</b></a></li>
+											<ul type="a" style="text-align: left">
+												<li><a href="#potentials"><b>Limitations</b></a></li>
+												<li><a href="#dynamics"><b>Future work</b></a></li>
+											</ul>
+											<li><a href="#dynamics"><b>Conclusion</b></a></li>
+										</ol>
+
+
 										<p>By far the biggest limitation of our approach is the high memory costs incurred at each time step due to our use of neural networks to predict the potentials. For every atom interaction, angle and dihedral, a whole MLP worth of activations needs to be stored for AD, in stark contrast to Greener & Jones (2021) which only activates the values in two adjacent energy bins to calculate gradients. Regardless of the considerably faster learning and generalising power that result from the use of deep learning is promising for DMS.</p>
 
 										<p>Further analysis not done here will also be needed to establish whether the learnt dynamics are truly representative of how proteins move in nature. This could be done by comparing the predicted Root Mean Squared Fluctuations of every residue in a protein with those obtained from NMR ensembles.</p>
@@ -74,9 +86,9 @@
 											<h2><b>Future work</b></h2>
 										</header>
 										Recent work has shown that complex physics can be learnt by stacking many layers of message passing GNNs (Sanchez-Gonzalez et al. 2020). Whilst we have intentionally restricted ourselves to one layer of PBMP in this work, we ultimately think moving towards deeper architectures with multiple layers will be needed to gain enough expressive power. However, much thought would need to go into how this could be done whilst maintaining intrepretability, as it will be hard to unpack the individual contributions from each atom in the protein to the overall dynamics. In the following sections, we outline 2 recent areas of work that we think will be of substantial use to protein dynamics.
-
+										<br>
 										<header>
-											<h3><b>Equivariant Message Passing Networks</b></h3>
+											<br><h3><b>Equivariant Message Passing Networks</b></h3>
 										</header>
 
 										<figure>
@@ -118,6 +130,13 @@
 										<p>Before we can move onto all-atom representations, course-grained graph representations of proteins are likely to be of substantial use in future research for understanding protein dynamics and numerous other problems in structural biology. The author intends to add this as a granularity feature in a new version of the Graphein (Jamasb et al. 2020) package currently under development.</p>
 
 										<p>Given the healthy scepticism of many scientists and clinicians about the use of machine learning in medicine, integrating explainability into our methods of understanding protein dynamics will be of vital importance if these methods are to be used to design new drugs and treatments in healthcare.</p>
+
+										<footer class="major">
+											<ul class="actions special">
+												<li><a href="results.html" class="button">Results</a></li>
+												<li><a href="references.html" class="button">References</a></li>
+											</ul>
+										</footer>
 									</div>
 							</section>
 					</div>

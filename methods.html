@@ -124,7 +124,7 @@
 										atoms in its neighbourhood N(i). The final accelerations experienced by the atoms, ai, are calculated using Newton’s 2nd Law of Motion. The masses of the individual atoms, massi, are the only physical or chemical properties given to the model. Whilst the masses of the atoms could definitely be learnt in an end-to-end fashion, adding Eq 4 gives us interpretability when forces act on atoms of different masses.
 										While PBMP shares multiple properties with conventional message-passing on graphs, our method does not apply an MLP over the node attributes (as this is the experienced force) and we add physics-based equations. We also only employ one layer of PBMP per time step.</p>
 
-										<p>Technically, Eqs 1-4 describe the architecture of the distance sub-module shown in Figure 3. In the bond and dihedral angles sub-modules, we modify Equation 1 to take in 3 or 4 atom embeddings respectively. Thus, the ’messages’ constructed between multiple nodes/atoms encode the potential of that angle system. ψp in the angle and dihedral sub-modules can calculate the forces experienced by each atom correspondingly.</p>
+										<p>In the distance submodule, a<sub>ij</sub> also includes the absolute sequence seperation of the 2 atoms underconsideration. This allows for the model to learn differences between colvaent bonds as well as local and global preferences. Eqs 1-4 describe the architecture of the distance sub-module shown in Figure 3. In the bond and dihedral angles sub-modules, we modify Equation 1 to take in 3 or 4 atom embeddings respectively. Thus, the ’messages’ constructed between multiple nodes/atoms encode the potential of that angle system. ψ<sub>p</sub> in the angle and dihedral sub-modules can calculate the forces experienced by each atom correspondingly.</p>
 										
 										<p>Full derivation of the equations used in ψp are provided in Monasse & Boussinot (2014). However, in brief, the messages can be thought of as the scalar value describing the magnitude of the force between multiple atoms (be they bonded or in an angle/dihedral) and ψp recovers this into a 3D force vector to be
 										applied to each atom. For example, in the case of distance forces, this is simply achieved by multiplying
@@ -150,7 +150,17 @@
 
 										<p>Once we have trained the models, we can interpret the learnt dynamics by presenting the sub-networks with synthetic examples (e.g. 2 atoms at varying distances apart). These can then be used to graph potentials and compared to other force-fields (e.g. that in Greener & Jones (2021) trained on the same data) and known statistics from chemical knowledge and the PDB (e.g. Mean Potential Force (Zhou & Zhou 2002)), the last of which has not been done here (see Discussion). This is only possible because we have integrated our knowledge of molecular dynamics into our neural network architecture.</p>
 
-										<p>After training, sample trajectories were generated over 5,000 steps (structure saved every 10 steps) with a time step of 0.02 and temperature of 0.01. Folding of small proteins over 10,000s of steps was also attempted. Animations were made in PyMol (DeLano et al. 2002) and plots were produced using Matplotlib (Hunter 2007).</p>
+										<p>After training, sample trajectories were generated over 10,000 steps (structure saved every 100 steps) with a time step of 0.02 and temperature of 0.02. We use lower temperature factors during testing as Folding of small proteins over 10,000s of steps was also attempted. Animations were made in PyMol (DeLano et al. 2002) and plots were produced using Matplotlib (Hunter 2007).</p>
+
+
+										<footer class="major">
+			
+											<ul class="actions special">
+												<li><a href="intro.html" class="button">Methods</a></li>
+												<li><a href="results.html" class="button">Results</a></li>
+											</ul>
+		
+										</footer>
 									</div>
 								</div>
 							</section>

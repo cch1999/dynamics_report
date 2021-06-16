@@ -53,21 +53,15 @@
 										</header>
 
 
+										<p>It is very common in structural bioinformaics to calculate <a href="https://en.wikipedia.org/wiki/Distance_matrix?oldformat=true#Other_uses">distance matrices</a> between all the atoms in a protein. These encode the 3D representation of the structure in a way that is invariant to the rotations and translations of the protein coordinates and are commonly used in protein structure prediction and molecular dynamics. However, the size of the distance matrix increases with the square of the sequence length, making this a significant limitation in DMS due to the requirements of AD.</p>
 
 										<figure>
 											<img src="../images/keops.png" width=700/>
-											<figcaption>Figure 3: a dense and symbolic distance matrix (adapted from Feydy et al (2020).</figcaption>           
+											<figcaption>Figure 3: a dense and symbolic distance matrix (adapted from <span class="tooltip">Feydy et al (2020)<span class='tooltiptext'>Charlier, B., Feydy, J., Glaun`es, J., Collin, F.-D. & Durif, G. (2021), <i>‘<a href="https://www.jeanfeydy.com/Papers/KeOps_NeurIPS_2020.pdf">Kernel operations on the gpu, with autodiff, without memory overflows</a>’</i>, Journal of Machine Learning Research 22(74), 1–6.</span></span>.</figcaption>           
 										</figure><br>
 
-										<p>It is very common in sturctural bioinformaics</p>
+										<p>As this is a common issue in the field of Geometric Deep Learning, the KeOps package has been developed to solve many of people problems. KeOps allows for reductions on large matrices (e.g. KNN calculations) that otherwise would not fit on the GPU memory. This is done through the use of symbolic distance matrices (Figure x). Instead of storing a large matrix populated with precomuted values, symbolic matrices simply store the data required to generate the matrix (e.g. two vectors/matrices) and the equations needed to compute the elements in the matrix. In the case of protein distance matrices, the only data stored are the Cartesian coordinates of every atom (x and y, where x is the transpose of y) and the <a href="https://en.wikipedia.org/wiki/Pythagorean_theorem">Pythagorean theorem</a> to compute distances. This allows for substantial reductions in memory costs as the whole distance matrices is not stored in the main GPU memory and happens much more effectively using lower-level computations. In our case, we can effectively compute which are the K-nearest neighbours without needed to calculate a whole dense matrix in the GPU memory.</p>
 
-										<p>Cruicially, it allows reductions (e.g. KNN calculations) on large matrices that otherwise would not fit on the GPU memory. This is done through the use of symbolic distance matrices. In stead of storing a large matrix populated with precomuted values, symbolic matrices simply store the data required to generate the matrix (e.g. two vectors/matrices) and the equations needed to compute the elements in the matrix. In the case of protein distance matrices, the only data stored are the Cartesian coordinates of every atom (x and y, where x is the transpose of y) and the <a href="https://en.wikipedia.org/wiki/Pythagorean_theorem">Pythagorean theorem</a> to compute distances. This allows for substantial reductions in memory costs as the whole distance matrices is very stored in the main GPU memory and happens much more effectively using lower-level computations. In our case, we can effectively compute which are the K-nearest neighbours without needed to calculate a whole dense matrix.</p>
-
-										<p>Whether you are assuming the protein graph is fully connected (like in <span class="tooltip">Greener & Jones (2021)
-											<span class="tooltiptext">
-												Greener, J. G. & Jones, D. T. (2021),<br> <i>‘Differentiable molecular simulation can learn all the parameters in a coarse-grained force field for proteins’</i>,<br> bioRxiv <br>
-												<a href="https://doi.org/10.1101/2021.02.05.429941"><b>
-													doi:10.1101/2021.02.05.429941</b></a></span></span>) or only locally connected (like in ours), some form of distance matrix needs to be calculated at every step in the DMS.</p>
 										
 								</div>
 							</section>

@@ -55,6 +55,23 @@
 											<h2>Lay Summary</h2>
 										</header>
 
+										
+
+										<figure>
+											<span class="image right" alt="" style="border-radius: 5%; border: white;"> <video width="400" autoplay loop atl="">
+												<source src="images/summary.mp4" type="video/mp4">
+												<source src="movie.ogg" type="video/ogg">
+											  Your browser does not support the video tag.
+											</video> 
+											<figcaption>Figure 5: Left: our current approach draws edges between all atoms based on the KNNs equally. Right: we propose using simple rules that draws edges between the nodes that are known to have covalent interactions (red), leaving the remaining non-covalent edges to be constructed using either a KNN or connectivity radius approach (black).<br></figcaption>      </span>      
+										</figure>
+
+										<p>For most of the history of structural biology, we have tended to only consider proteins as static structures when I come to explaining their function and properties, largely due to the early development of techniques such as x-ray crystallography. However, new techniques, such as protein NMR, have allowed us dynamics the movements, or dynamics, of proteins and the degree to which they contribute to proteins in nature has only recently been fully appriciated. Furthering our understanding of protein dynamics will be essential to understand disease caused by misfolding and aggregation, such as Alzheimer’s, and developing next generation drugs and <i>de novo</i> protein design.</p>
+
+										<p>Substantial process has been made recently in the field of protein structure prediction through the application of machine learning. However, these benefits have yet to be seen to the same extent in other areas of structural bioinformaics. Here, we attempted to combine recent developments in molecular simulations and a type of machine learning model that can natively take protein structures as an input to see how well these methods perform on learning the dynamics of a single, small protein.</p>
+
+										<p>Our learnt dyamics model is able to learn backbone flexibility and can simulate small proteins over short timesteps. However, in comparisons to other force-fields and known NMR data, our model tends to introduce too much flexibility in the protein and does not capture the conplex interactions between sidechains that is cruical for stabalising tertiary structure. Most importantly, we demonstrate that neural network based approaches have the potential to learn accurate dynamics in with short training times and using small amounts of data, something that will be important if these approaches are to be used on different systems. We conclude by discussing future directions of possible research, specificing using models that are better suited to learning on proteins and their coordiates and that can learn higher-order interactions in proteins.</p>
+
 
 										<header class="major">
 												<h3>Abbreviations and Glossary</h3>
@@ -95,6 +112,9 @@
 										<a href="https://en.wikipedia.org/wiki/Root-mean-square_deviation_of_atomic_positions">
 											<b>RMSD</b></a><br><br>
 
+										<a href="https://en.wikipedia.org/wiki/Mean_squared_displacement">
+											<b>RMSF</b></a><br><br>
+
 										<a href="https://en.wikipedia.org/wiki/Simplicial_complex">
 											<b>Simplicial Complexes</b></a><br>
 
@@ -123,9 +143,11 @@
 
 											A simulation method for the study of movements of atoms and molecules<br>
 
-											The study of <br>
+											The study of the transitions proteins take between stable structures<br>
 
 											Root Mean Squared Deviation: a measure of the average distance between atoms of two superimposed proteins<br>
+
+											Root Mean Squared Fluctuations: a measure of the average flexibility of a protein or residues<br>
 			
 											Toplogical objects which generalise graphs to higher dimensions<br>
 
