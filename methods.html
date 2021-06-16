@@ -81,12 +81,7 @@
 										</figure><br>
 
 
-										<p>We construct a DMS simulator for proteins (as seen in Figure 1) where dθ is outlined in Figure 3. For every N number of steps, the atoms enter dθ as a set of points in space. Edges are drawn between the atoms using a fast KNN algorithm implemented in KeOps such that distance matrices only need to be computed symbolically. Our physics-based message-passing procedure (see Section 2.3) employs 3 separate sub-networks to predict the potentials of atom-atom interactions based on distances, angles and dihedrals respectively. Forces are calculated by taking the gradient of the potentials at the given distance/angle. Finally, all forces acting on every atom are summed and final atom accelerations are computed.</p>
-
-										<figure>
-											<img src="images/keops.png" width=700/>
-											<figcaption>Figure 3: An overview of our dynamics model d<sub>θ</sub> .</figcaption>           
-										</figure><br>
+										<p>We construct a DMS simulator for proteins (as seen in Figure 1) where dθ is outlined in Figure 3. For every N number of steps, the atoms enter dθ as a set of points in space. Edges are drawn between the atoms using a fast KNN algorithm implemented in KeOps such that distance matrices only need to be computed symbolically. Our physics-based message-passing procedure (see Section 2.3) employs 3 separate sub-networks to predict the potentials of atom-atom interactions based on distances, angles and dihedrals respectively. Forces are calculated by taking the gradient of the 
 
 										<p>We use the same Verlet integrator as seen in Greener & Jones (2021) as the Update function to compute the new velocities and coordinates. As the atoms are initialised with random starting velocities in every batch of training, the networks are forced to learn a dynamics model that can maintain the structure overtime. The simulator and the message-passing layers are implemented in <a href="https://pytorch.org/">Pytorch</a> (add reference), making the whole function end-to-end differentiable.</p>
 
@@ -103,32 +98,29 @@
 										<p>We propose the use of a new GNN architecture, called physics-based message-passing (PBMP), which leverages our knowledge of the mechanics underlying molecular dynamics (Monasse & Boussinot 2014) and the inductive biases of GNNs (Battaglia et al. 2018, Monti et al. 2017). These physics-based equations could certainly be learnt by a neural network, but by integrating them into our message-passing procedure, we force the network to learn around these equations which makes our model interpretable. We define a basic PBMP as the following:</p>
 
 										\begin{equation}
-										m_{ij} = \phi_e(h_i,h_j,a_{ij})
+										m_{ij} = \phi_e(h_i,h_j,e_{ij})
 										\end{equation}
 										\begin{equation}
 										\overrightarrow{F_{ij}} = \psi_p(m_{ij})
 										\end{equation}
 										\begin{equation}
-										\overrightarrow{F_i} = \sum_{j\in\mathcal{N}(i)}^{}F_{ij}
+										\overrightarrow{F_i} = \sum_{j\in\mathcal{N}(i)}^{}\overrightarrow{F_{ij}}
 										\end{equation}
 										\begin{equation}
 										\overrightarrow{a_i} = \overrightarrow{F_i}/mass_i
 										\end{equation}
 
 										
-										<p>where h is the one-hot embeddings of the atom types, aij are the edge properties (e.g. Euclidean
-										distance and sequence separation or bond angle), φe is a deep Multi Layer Perceptron (MLP) that
-										constructs the one-dimensional messages mij, ψp is an equation derived from our knowledge of the
-										physics of the systems. ψ<sub>p</sub> in turn calculates the individual force vector (Fij) that atom j exerts on
-										atom i. Fi is the total force experienced by atom i and is the sum of all the forces exerted on it by the
-										atoms in its neighbourhood N(i). The final accelerations experienced by the atoms, ai, are calculated using Newton’s 2nd Law of Motion. The masses of the individual atoms, massi, are the only physical or chemical properties given to the model. Whilst the masses of the atoms could definitely be learnt in an end-to-end fashion, adding Eq 4 gives us interpretability when forces act on atoms of different masses.
-										While PBMP shares multiple properties with conventional message-passing on graphs, our method does not apply an MLP over the node attributes (as this is the experienced force) and we add physics-based equations. We also only employ one layer of PBMP per time step.</p>
+										<p>where <i>h</i> is the one-hot embeddings of the atom types, <i>e<sub>ij</sub></i> are the edge properties (e.g. Euclidean
+										distance or bond angle), <i>φ<sub>e</sub></i> is a deep Multi Layer Perceptron (MLP) that
+										constructs the one-dimensional messages <i>mij</i>, <i>ψp</i> is an equation derived from our knowledge of the
+										physics of the systems. <i>ψ<sub>p</sub></i> in turn calculates the individual force vector (<i>Fij</i>) that atom <i>j</i> exerts on
+										atom <i>i</i>. Fi is the total force experienced by atom i and is the sum of all the forces exerted on it by the
+										atoms in its neighbourhood <i><span>&#413;</span>(i)</i>. The final accelerations experienced by the atoms, <i>ai</i>, are calculated using Newton’s 2nd Law of Motion. The masses of the individual atoms, massi, are the only physical or chemical properties given to the model. Whilst the masses of the atoms could definitely be learnt in an end-to-end fashion, adding Eq 4 gives us interpretability when forces act on atoms of different masses. While PBMP shares multiple properties with conventional message-passing on graphs, our method does not apply an MLP over the node attributes (as this is the experienced force) and we add physics-based equations. We also only employ one layer of PBMP per time step.</p>
 
-										<p>In the distance submodule, a<sub>ij</sub> also includes the absolute sequence seperation of the 2 atoms underconsideration. This allows for the model to learn differences between colvaent bonds as well as local and global preferences. Eqs 1-4 describe the architecture of the distance sub-module shown in Figure 3. In the bond and dihedral angles sub-modules, we modify Equation 1 to take in 3 or 4 atom embeddings respectively. Thus, the ’messages’ constructed between multiple nodes/atoms encode the potential of that angle system. ψ<sub>p</sub> in the angle and dihedral sub-modules can calculate the forces experienced by each atom correspondingly.</p>
+										<p>In the distance submodule, <i>e<sub>ij</sub></i> also includes the absolute sequence seperation of the 2 atoms underconsideration. This allows for the model to learn differences between colvaent bonds as well as local and global preferences. Eqs 1-4 describe the architecture of the distance sub-module shown in Figure 3. In the bond and dihedral angles sub-modules, we modify Equation 1 to take in 3 or 4 atom embeddings respectively. Thus, the ’messages’ constructed between multiple nodes/atoms encode the potential of that angle system. <i>ψ<sub>p</sub></i> in the angle and dihedral sub-modules can calculate the forces experienced by each atom correspondingly.</p>
 										
-										<p>Full derivation of the equations used in ψp are provided in Monasse & Boussinot (2014). However, in brief, the messages can be thought of as the scalar value describing the magnitude of the force between multiple atoms (be they bonded or in an angle/dihedral) and ψp recovers this into a 3D force vector to be
-										applied to each atom. For example, in the case of distance forces, this is simply achieved by multiplying
-										mij by the normalised vector difference between atoms i and j (norm(ij)).</p>
+										<p>Full derivation of the equations used in <i>ψ<sub>p</sub></i> are provided in Monasse & Boussinot (2014). However, in brief, the messages can be thought of as the scalar value describing the magnitude of the force between multiple atoms (be they bonded or in an angle/dihedral) and ψp recovers this into a 3D force vector to be applied to each atom. For example, in the case of distance forces, this is simply achieved by multiplying <i>m<sub>ij</sub></i> by the normalised vector difference between atoms <i>i</i> and <i>j</i> (norm(ij)).</p>
 
 										<h3 id="dataset"><b>Dataset</b></h3>
 
@@ -139,7 +131,7 @@
 										</figure>
 										<br>
 
-										In this work we use the same dataset from Greener & Jones (2021) for training and evaluation. This dataset contains 2204 small protein structures (2004/200 train/test split) with a course-grained presentation (each residue has 4 atoms, Ca, C, N and side chain centroid) as seen in Figure 2. We use this datasets for fair comparisons, the quality of the structures (better than 2.5  ̊A resolutions and no missing internal residues) and small chain lengths (ideal for memory restrictions)</p>
+										In this work we use the same dataset from Greener & Jones (2021) for training and evaluation. This dataset contains 2204 small protein structures (2004/200 train/test split) with a course-grained presentation (each residue has 4 atoms, C<span>&#x3B1</span>, C, N and side chain centroid) as seen in Figure 2. We use this datasets for fair comparisons, the quality of the structures (better than 2.5 <span>&#8491;</span> resolutions and no missing internal residues) and small chain lengths (ideal for memory restrictions)</p>
 
 										<h3 id="training"><b>Training</b></h3>
 
@@ -150,7 +142,7 @@
 
 										<p>Once we have trained the models, we can interpret the learnt dynamics by presenting the sub-networks with synthetic examples (e.g. 2 atoms at varying distances apart). These can then be used to graph potentials and compared to other force-fields (e.g. that in Greener & Jones (2021) trained on the same data) and known statistics from chemical knowledge and the PDB (e.g. Mean Potential Force (Zhou & Zhou 2002)), the last of which has not been done here (see Discussion). This is only possible because we have integrated our knowledge of molecular dynamics into our neural network architecture.</p>
 
-										<p>After training, sample trajectories were generated over 10,000 steps (structure saved every 100 steps) with a time step of 0.02 and temperature of 0.02. We use lower temperature factors during testing as Folding of small proteins over 10,000s of steps was also attempted. Animations were made in PyMol (DeLano et al. 2002) and plots were produced using Matplotlib (Hunter 2007).</p>
+										<p>After training, sample trajectories were generated over 10,000 steps (structure saved every 100 steps) with a time step of 0.02 and temperature of 0.02. We use lower temperature factors during testing as this is less likely to cause instability (i.e. an atom to move out of it's energy well). Folding of small proteins over 10,000s of steps was also attempted. Animations were made in PyMol (DeLano et al. 2002) and plots were produced using Matplotlib (Hunter 2007).</p>
 
 
 										<footer class="major">
@@ -168,13 +160,7 @@
 
 				<!-- Footer -->
 				<footer class="major">
-					<ul class="actions special">
-						<li><a href="intro.html" class="button">My background</a></li>
-						<li><a href="methods.html" class="button">Fun stuff</a></li>
-						<li><a href="results.html" class="button">My background</a></li>
-						<li><a href="dicussion.html" class="button">Fun stuff</a></li>
-						<li><a href="references.html" class="button">My background</a></li>
-					</ul>
+
 
 					<p class="copyright">&copy; Charlie Harris. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
 

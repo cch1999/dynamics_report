@@ -61,7 +61,7 @@
 										<p>The advances of <a href="https://deepmind.com/research/case-studies/alphafold">AlphaFold2</a> <span class="tooltip">(Jumper et al. 2020)</span> have shown that our future understanding of biology and the mechanisms of disease will be increasingly understood at the structural level <span class="tooltip">(AlQuraishi 2021)
 											<span class="tooltiptext">AlQuraishi, M. (2021), <i>‘Machine learning in protein structure prediction’</i>, Current Opinion in Chemical Biology 65, 1–8, <a href="https://doi.org/10.1016/j.cbpa.2021.04.005">doi.org/10.1016/j.cbpa.2021.04.005</a>.</span></span>. Therefore, developing new ”neuralised” approaches to understand the dynamics of proteins will be of fundamental importance to solve problems at the frontiers of medicine and drug design. Indeed, the fact that a limitation of AlphaFold2 seems to be its ability to predict NMR solved structures (Jumper et al. 2020) suggests there is still much work to be done.</p>
 
-										<h3 id="ml"><b>Section Contents</b></h3>
+										<h3 id="ml"><b>Machine learning background</b></h3>
 
 
 										<p>Graph neural networks (GNNs) (<span class="tooltip">Battaglia et al. 2018</span>, <span class="tooltip">Monti et al. 2017</span>), themselves a subset of <a href="https://geometricdeeplearning.com/">Geometric Deep Learning</a> (<span class="tooltip">Bronstein et al. 2017</span>), have been used to learn complex physics before (<span class="tooltip">Sanchez-Gonzalez et al. 2020</span>). However, in comparison to proteins, these have all been done on relatively homogeneous materials and little is known about the number of parameters and expressivity required to learn the dynamics of whole proteins (and protein complexes) using neural network based approaches.</p>
@@ -84,7 +84,7 @@
 
 										<figure>
 											<img src="images/dms.png" alt="" width=800/>
-											<figcaption>Figure 1: An overview of a general DMS model. The native structure is first perturbed by assigning random velocities, V , with temperature T , to all the atoms. The protein passes through a simulator, s, N number of times. s consists of a model, d, with parameters θ, that learns the dynamics of the system. The dynamics computed in dθ is passed to the Update function, which updates the coordinates and velocities of the atoms. The Update function can be a standard velocity integrator. After each forward pass, AD is used to refine the parameters θ (red).</figcaption>           
+											<figcaption>Figure 1: An overview of a general DMS model. The native structure is first perturbed by assigning random velocities, <i>V</i> , with temperature <i>T</i> , to all the atoms. The protein passes through a simulator, <i>s</i>, <i>N</i> number of times. s consists of a model, <i>d</i>, with parameters <i>θ</i>, that learns the dynamics of the system. The dynamics computed in dθ is passed to the <i>Update</i> function, which updates the coordinates and velocities of the atoms. The Update function can be a standard velocity integrator. After each forward pass, AD is used to refine the parameters <i>θ</i> (red).</figcaption>           
 										</figure><br>
 										
 										<p>A generalised overview of the approach outlined in <span class="tooltip">Greener & Jones (2021)

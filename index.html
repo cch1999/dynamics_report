@@ -27,7 +27,7 @@
 						<h1>Learning interpretable protein dynamics using Geometric Deep Learning</h1>
 						<h2>Charles Harris</h2>
 						<h3>MSc Bioinformatics and Theortical System Biology Data Analysis Project</h3>
-						<h3>Supervisors: <a href="https://www.imperial.ac.uk/people/m.bronstein">Prof Michael Bronstein</a> | <a href="https://people.epfl.ch/bruno.correia/?lang=en">Dr Bruno Correia</a> (EPFL)</h3>
+						<h3>Supervisors: <a href="https://www.imperial.ac.uk/people/m.bronstein">Prof Michael Bronstein</a> | <a href="https://people.epfl.ch/bruno.correia/?lang=en">Prof Bruno Correia</a> (EPFL)</h3>
 						<p>Understanding the dynamics of proteins is of fundamental importance to solving problems in drug design and uncovering the mechanisms of disease. The recent success of machine learning in the domain of protein structure prediction suggests that there is much to be gained by applying the same techniques to learning protein dynamics. However, most current approaches have either only been applied to small molecules or have not leveraged the generalising ability of modern deep learning. Here we introduce a variation on the popular message-passing architecture called physics-based message-passing, which aims to solve many problems of previous work using deep learning whilst maintaining interpretability. This is done by integrating our knowledge of the physics of protein dynamics into the message passing architecture. We conclude with a short discussion on the limitations of our approach and possible future directions for the field.</p>
 					</header>
 
@@ -55,27 +55,22 @@
 											<h2>Lay Summary</h2>
 										</header>
 
-										
-
 										<figure>
 											<span class="image right" alt="" style="border-radius: 5%; border: white;"> <video width="400" autoplay loop atl="">
 												<source src="images/summary.mp4" type="video/mp4">
 												<source src="movie.ogg" type="video/ogg">
 											  Your browser does not support the video tag.
 											</video> 
-											<figcaption>Figure 5: Left: our current approach draws edges between all atoms based on the KNNs equally. Right: we propose using simple rules that draws edges between the nodes that are known to have covalent interactions (red), leaving the remaining non-covalent edges to be constructed using either a KNN or connectivity radius approach (black).<br></figcaption>      </span>      
+											<figcaption>Figure 1: An example of a structure determined by NMR (1A5R) which consists of a rigid central domain and two highly flexible terminal chains.<br></figcaption>      </span>      
 										</figure>
 
-										<p>For most of the history of structural biology, we have tended to only consider proteins as static structures when I come to explaining their function and properties, largely due to the early development of techniques such as x-ray crystallography. However, new techniques, such as protein NMR, have allowed us dynamics the movements, or dynamics, of proteins and the degree to which they contribute to proteins in nature has only recently been fully appriciated. Furthering our understanding of protein dynamics will be essential to understand disease caused by misfolding and aggregation, such as Alzheimer’s, and developing next generation drugs and <i>de novo</i> protein design.</p>
+										<p>For most of the history of structural biology, we have tended to only consider proteins as static structures when it came to explaining their function and properties, largely due to the early development of techniques such as X-ray crystallography. However, new techniques, such as protein NMR, have allowed us to study the movements, or dynamics, of proteins and the degree to which they contribute to protein function in nature has only recently been fully appriciated. Furthering our understanding of protein dynamics will be essential to understand diseases caused by misfolding and aggregation, such as Alzheimer’s, and developing next generation drugs and <i>de novo</i> protein design.</p>
 
-										<p>Substantial process has been made recently in the field of protein structure prediction through the application of machine learning. However, these benefits have yet to be seen to the same extent in other areas of structural bioinformaics. Here, we attempted to combine recent developments in molecular simulations and a type of machine learning model that can natively take protein structures as an input to see how well these methods perform on learning the dynamics of a single, small protein.</p>
+										<p>Substantial process has been made recently in the field of protein structure prediction through the application of machine learning. However, these benefits have yet to be seen to the same extent in other areas of structural bioinformaics. Here, we attempt to combine recent developments in molecular simulations and a type of machine learning model that can natively take protein structures as an input to see how well these methods perform on learning the dynamics of small proteins.</p>
 
-										<p>Our learnt dyamics model is able to learn backbone flexibility and can simulate small proteins over short timesteps. However, in comparisons to other force-fields and known NMR data, our model tends to introduce too much flexibility in the protein and does not capture the conplex interactions between sidechains that is cruical for stabalising tertiary structure. Most importantly, we demonstrate that neural network based approaches have the potential to learn accurate dynamics in with short training times and using small amounts of data, something that will be important if these approaches are to be used on different systems. We conclude by discussing future directions of possible research, specificing using models that are better suited to learning on proteins and their coordiates and that can learn higher-order interactions in proteins.</p>
+										<p>Our learnt dyamics model is able to model backbone flexibility and can simulate small proteins over short timesteps. However, in comparisons to other force-fields and known NMR data, our model tends to introduce too much flexibility in the protein and does not capture the conplex interactions between sidechains that is cruical for stabalising tertiary structure over longer periods. Most importantly, we demonstrate that neural network based approaches have the potential to learn accurate dynamics with short training times and using small amounts of data, something that will be important if these approaches are to be used on different systems. We conclude by discussing future directions of possible research, specifically using models that are better suited to learning on proteins (and their shapes) and that can also learn higher-order interactions in proteins.</p>
 
-
-										<header class="major">
-												<h3>Abbreviations and Glossary</h3>
-										</header>
+										<h3><b>Abbreviations and Glossary</b></h3>
 
 										<div style="width:30%;display: inline-block;">
 
@@ -118,7 +113,7 @@
 										<a href="https://en.wikipedia.org/wiki/Simplicial_complex">
 											<b>Simplicial Complexes</b></a><br>
 
-										<a href="https://en.wikipedia.org/wiki/Simplicial_complex">
+										<a href="methods.html">
 											<b>Physics-Based Message-Passing</b></a><br>
 
 										</div>
@@ -147,11 +142,11 @@
 
 											Root Mean Squared Deviation: a measure of the average distance between atoms of two superimposed proteins<br>
 
-											Root Mean Squared Fluctuations: a measure of the average flexibility of a protein or residues<br>
+											Root Mean Squared Fluctuations: a measure of the average flexibility of a protein or individual residues<br>
 			
 											Toplogical objects which generalise graphs to higher dimensions<br>
 
-											A novel message-passing layer for graphs that...
+											A novel message-passing layer for graphs that is interpretable<br>
 			
 			
 										</div>		

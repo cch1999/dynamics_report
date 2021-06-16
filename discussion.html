@@ -67,7 +67,7 @@
 
 										<figure>
 											<span class="image right"><img src="images/future_apporach.png" width=300 alt="" style="border-radius: 5%"/>
-											<figcaption>Figure 5: Left: our current approach draws edges between all atoms based on the KNNs equally. Right: we propose using simple rules that draws edges between the nodes that are known to have covalent interactions (red), leaving the remaining non-covalent edges to be constructed using either a KNN or connectivity radius approach (black).<br></figcaption>      </span>      
+											<figcaption>Figure 5: Left: our current approach draws edges between all atoms based on the KNNs equally. Right: we propose using simple rules that draws edges between the nodes that are known to have covalent interactions (red), leaving the remaining non-covalent edges (black) to be constructed using either a KNN or connectivity radius approach.<br></figcaption></span>      
 										</figure>
 
 										<p>More importantly, the residue-residue interactions that stabilise the secondary and tertiary structure were essentially unlearnt, even though MLPs should be able to approximate them in theory. This could be due to a number of factors; high learning rate, lack of exposure to tertiary flexibility due to insufficient number of time steps during training or a lack of signal-to-noise when compared to covalent interactions when minimising RMSD. We propose the latter issue should be resolved by creating 2 separate distance sub-networks, one for bonded and non-bonded interactions (Fig 5).</p>

@@ -78,7 +78,7 @@
 										<h3 id="dyanmics"><b>Learnt dynamics and simulations</b></h3>
 										<p></p>
 
-										<figure>
+										<figure id="animation">
 											<div style="width:49%;display: inline-block;">
 												<video width="400" autoplay loop>
 													<source src="images/dynamics_cartoon.mp4" type="video/mp4">
@@ -96,14 +96,14 @@
 											<figcaption>Figure 6: Caption<br></figcaption>      
 										</figure>
 
-										<p>Sample trajectories made using the learnt model in both cartoon and stick representations (Figure X). The animations show that the models have learnt native backbone flexibility but the tertiary structure eventually begins to unfold. Qualitatively, it can be observed that certain regions of the backbone have very loose dihedral angle constraints. The folding of small proteins was attempted the same as in Greener & Jones (2021) but with little success.</p>
+										<p>Sample trajectories made using the learnt model in both cartoon and stick representations (<a href="#animation">Figure X</a>). The animations show that the models have learnt native backbone flexibility but the tertiary structure eventually begins to unfold. Qualitatively, it can be observed that certain regions of the backbone have very loose dihedral angle constraints. The folding of small proteins was attempted the same as in Greener & Jones (2021) but with little success.</p>
 
 										<figure>
 											<iframe src="file.html" width=1050 height=500></iframe>
 											<figcaption>Figure: RMSF of different residues in two small proteins.<br></figcaption>
 										</figure><br>
 
-										<p>As a final means of evaluating our leanrt dynamics, we compare the flexibility seen in our simulations with the learnt force-field from Greener and Jones (2021) and NMR. To do this, we compute the Root Mean Sqaured Fluctuations (RMSFs) of every residue in two small proteins, Trp-cage (2JOF A) and a novel peptide assuming an Beta-Beta-Alpha (BBA) Fold (1FME A). In general our model preserves native stability (compared to NMR) less well than Greener and Jones (2021). As expected, the terminal residues of the proteins tend to me more flexible than the rest of the sequence, only many more residues partake in this flexible motion that is seen in NMR. However, we have generally learnt the fact that terminal residues should be flexible better than in Greener and Jones (2021). For example, our method predicts that the C-terminal residue in BBA has an RMSF of 2.7 Å whilst the NMR emsemble is 3.4 Å. Greener and Jones (2021) on the otherhand models the whole of the terminal alpha-helix to have RMSF of less than 0.8 Å.</p>
+										<p>As a final means of evaluating our leanrt dynamics, we compare the flexibility seen in our simulations with the learnt force-field from Greener and Jones (2021) and NMR. To do this, we compute the Root Mean Sqaured Fluctuations (RMSFs) of every C<span>&#x3B1</span> atom in two small proteins, Trp-cage (2JOF A) and a novel peptide assuming an Beta-Beta-Alpha (BBA) Fold (1FME A). In general our model preserves native stability (compared to NMR) less well than Greener and Jones (2021). As expected, the terminal residues of the proteins tend to me more flexible than the rest of the sequence, only many more residues partake in this flexible motion that is seen in NMR. However, we have generally learnt the fact that terminal residues should be flexible better than in Greener and Jones (2021). For example, our method predicts that the C-terminal residue in BBA has an RMSF of 2.7 Å whilst the NMR emsemble is 3.4 Å. Greener and Jones (2021) on the otherhand models the whole of the terminal alpha-helix to have RMSF of less than 0.8 Å.</p>
 
 										<footer class="major">
 			
