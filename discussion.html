@@ -61,30 +61,33 @@
 										</ol>
 
 
-										<p>By far the biggest limitation of our approach is the high memory costs incurred at each time step due to our use of neural networks to predict the potentials. For every atom interaction, angle and dihedral, a whole MLP worth of activations needs to be stored for AD, in stark contrast to Greener & Jones (2021) which only activates the values in two adjacent energy bins to calculate gradients. Regardless of the considerably faster learning and generalising power that result from the use of deep learning is promising for DMS.</p>
 
-										<p>Further analysis not done here will also be needed to establish whether the learnt dynamics are truly representative of how proteins move in nature. This could be done by comparing the predicted Root Mean Squared Fluctuations of every residue in a protein with those obtained from NMR ensembles.</p>
 
-										<p>The ultimate benchmark for our dynamics model will eventually be whether it can learn to fold small proteins, as was demonstrated with the learnt force-field in Greener & Jones (2021). Our dataset only contains small proteins (≤ 100 residues) too, meaning that the nature of inter-domain interactions will almost certainly not be learnt by any method trained on this dataset.</p>
-
-										<p>One general observation is that the potentials learnt for simple distances and angles have minima in the right places but tend to be quite ”broad” in comparison to the force-field learnt in Greener & Jones (2021). This would mean that our model may allow too much conformational flexibility compared to the native dynamics of proteins, which will cause steric clashing and be a problem for many tasks (e.g. assessing the ’drugability’ of a binding pocket). However, it is notable that the slopes of all our learned potentials are much smoother, due to the fact we are using universal function approximators instead of refining individual bins, which is much more susceptible to noise.</p>
-
+										<p>A general observation is that the potentials learnt for simple distances and angles have minima in the right places but tend to be quite ”broad” in comparison to the force-field learnt in Greener & Jones (2021). This would mean that our model may allow too much conformational flexibility compared to the native dynamics of proteins, which will cause steric clashing and be a problem for many tasks (e.g. assessing the ’drugability’ of a binding pocket (CITE DRUGG ABILITY PAPER)). However, it is notable that the slopes of all our learned potentials are much smoother, due to the fact we are using universal function approximators instead of refining individual bins, which is much more susceptible to noise.</p>
 
 										<figure>
 											<span class="image right"><img src="images/future_apporach.png" width=300 alt="" style="border-radius: 5%"/>
 											<figcaption>Figure 5: Left: our current approach draws edges between all atoms based on the KNNs equally. Right: we propose using simple rules that draws edges between the nodes that are known to have covalent interactions (red), leaving the remaining non-covalent edges to be constructed using either a KNN or connectivity radius approach (black).<br></figcaption>      </span>      
 										</figure>
 
-										
 										<p>More importantly, the residue-residue interactions that stabilise the secondary and tertiary structure were essentially unlearnt, even though MLPs should be able to approximate them in theory. This could be due to a number of factors; high learning rate, lack of exposure to tertiary flexibility due to insufficient number of time steps during training or a lack of signal-to-noise when compared to covalent interactions when minimising RMSD. We propose the latter issue should be resolved by creating 2 separate distance sub-networks, one for bonded and non-bonded interactions (Fig 5).</p>
 
 										<p>Our method also does not take into account any explicit solvent, which is problematic as protein folding and dynamics is largely facilitated by the hydrophobic effect (Bellissent-Funel et al. 2016, Cheung et al. 2002). This could be accounted for in the model by concatenating the solvent accessible area of every atom to its embeddings. Alternatively, simply concatenating the number of neighbours that every atom has would be a more efficient alternative.</p>
 
-										<p>As was observed in Greener & Jones (2021), like deep learning, DMS is sensitive to hyperparameters. Our method has the additional complication of the neural network hyperparameters which also need to be refined to balance expresitivity against memory requirements (as well as finding an optimum value of K) and is on going at the time of writing this report. <br> Residual connections were added between the layers in the MLPs but this <br>did not substantially increase performance.</p>
+										<p>In general, the RMSF analysis (Figure X) showed that our method models considerably more flexibility in most parts of the two proteins we analysed. This is not surprising given the broad potentials seen in Figure X. The BBA results would seem to suggest that the beta-strands tend to be modeled with more acccuate flexibility than the alpha helical regions, with the second beta-sheet conforming to flexibility near that seen in the NMR ensemble. However, further analysis will neeed to be performed before any broad conclusions can be made. For example, the reduced RMSF seen in the second beta-sheet of BBA couple be due to the global alignment algorithums preference to align the structures along the beta-sheets as the alpha-helix detaches from the fold during simulation.</p>
+											
+
+										<p>The ultimate benchmark for our dynamics model will eventually be whether it can learn to fold small proteins, as was demonstrated with the learnt force-field in Greener & Jones (2021). Our dataset only contains small proteins (≤ 100 residues) too, meaning that the nature of inter-domain interactions will almost certainly not be learnt by any method trained on this dataset. However, the memory issues seen in our method, and protein DMS more generally, will need to be addressed before larger proteins can be considered for use in training. The KeOps library has also resulted in substantial memory improvements in other Geometric Deep Learning based apporaches with proteins (cite dMaSIF) and future work could look into weather this could applied to other aspects of the DMS process (e.g. velocity integrators and energy calculations).</p>
+
+
+										<p>As was observed in Greener & Jones (2021), like deep learning, DMS is sensitive to hyperparameters. Our method has the additional complication of the neural network hyperparameters which also need to be refined to balance expresitivity against memory requirements (as well as finding an optimum value of K) and is on going at the time of writing this report. Residual connections were added between the layers in the MLPs but this did not substantially increase performance.</p>
+
+										<p>By far the biggest limitation of our approach is the high memory costs incurred at each time step due to our use of neural networks to predict the potentials. For every atom interaction, angle and dihedral, a whole MLP worth of activations needs to be stored for AD, in stark contrast to Greener & Jones (2021) which only activates the values in two adjacent energy bins to calculate gradients. While it should be noted that we simulated our proteins over considerably fewer timesteps than in Greener and Jones (2021), so the comparison is only fair at short timescales, the results are still impressive given the substantially faster training time (~100x) and more efficent use of training data (1 epoch down from 45). This is a testimate to the generalising and learning power of modern deep learning that suggests these methods are promising given more training time and hyperparameter refinement.</p>
 
 										<header>
 											<h2><b>Future work</b></h2>
 										</header>
+
 										Recent work has shown that complex physics can be learnt by stacking many layers of message passing GNNs (Sanchez-Gonzalez et al. 2020). Whilst we have intentionally restricted ourselves to one layer of PBMP in this work, we ultimately think moving towards deeper architectures with multiple layers will be needed to gain enough expressive power. However, much thought would need to go into how this could be done whilst maintaining intrepretability, as it will be hard to unpack the individual contributions from each atom in the protein to the overall dynamics. In the following sections, we outline 2 recent areas of work that we think will be of substantial use to protein dynamics.
 										<br>
 										<header>
@@ -98,7 +101,7 @@
 													<source src="movie.ogg" type="video/ogg">
 												  Your browser does not support the video tag.
 												</video> 
-											<figcaption>Figure 6: Caption<br></figcaption>      </span>      
+											<figcaption>Figure 6: Examples of translation invariant and equivariant tasks. In translation invariance, the predicted output (e.g. the name or function of the whole protein/object) should not change as the input is translated in space. In a translation equivariant task (e.g. protein domain or image segmentation, if a tranformation is applied in the input domain (e.g. the input protein is shifted) the model should be able to perform the same transformation in the output domain.<br></figcaption>      </span>      
 										</figure>
 
 
@@ -143,13 +146,6 @@
 
 				<!-- Footer -->
 				<footer class="major">
-					<ul class="actions special">
-						<li><a href="intro.html" class="button">My background</a></li>
-						<li><a href="methods.html" class="button">Fun stuff</a></li>
-						<li><a href="results.html" class="button">My background</a></li>
-						<li><a href="dicussion.html" class="button">Fun stuff</a></li>
-						<li><a href="references.html" class="button">My background</a></li>
-					</ul>
 
 					<p class="copyright">&copy; Charlie Harris. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
 
