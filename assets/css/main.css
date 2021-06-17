@@ -75,7 +75,11 @@ ol, ul {
   visibility: visible;
 }
 
-
+window.MathJax = {
+	tex: {
+	  tags: 'ams'
+	}
+  };
 
 blockquote, q {
 	quotes: none;
